@@ -1,5 +1,5 @@
 import './style.css';
-import './interfaceHandler.js';
+import './mediator.js';
 
 document.querySelector(".header").textContent = "Hello ToDo-List.";
 

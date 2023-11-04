@@ -1,5 +1,3 @@
-import { Todo } from './todoObj.js';
-
 export class Project {
 
     #title;
@@ -8,6 +6,7 @@ export class Project {
 
     constructor(title) {
         // Prevent title size from surpassing 30 characters length
+        console.log("Creating new Project: " + title);
         this.#title = (title.length <= 30) ? title : title.slice(0, 29);
         // Initial status of a project is obviously "undone", so false
         this.#status = false;
@@ -17,39 +16,30 @@ export class Project {
 
 
     // Title methods//
-    getTitle() { return this.#title };
+    getTitle = () => this.#title;
 
-    setTitle(newTitle) { this.#title = newTitle };
+    setTitle = (newTitle) => { this.#title = newTitle };
 
 
     // Status methods //
-    getStatus() { return this.#status };
+    getStatus = () => this.#status ;
 
-    toggleStatus() {
+    toggleStatus = () => {
         this.#status = this.#status ? false : true;
     };
 
 
     // Todo List methods //
-    addTodoList(todo) {
-        // Reject operation if input isn't a Todo Obj
-        console.log("Attempting to add To-do.")
-        if (todo instanceof Todo) {
-            this.#todoList.push(todo);
-            console.log("To-do added successfully");
-            return true;
-        } else {
-            console.log("Failed to add To-do, item isn't a Todo Obj.");
-            return false
-        };
+    addTodo = (todo) => {
+        this.#todoList.push(todo);
+        console.log("To-do added successfully.");
     };
 
-    getTodoList() { return this.#todoList };
+    getTodoList = () => this.#todoList ;
 
-    removeTodo(index) {
+    removeTodo = (index) => {
         console.log("Removing Todo-list at index " + index);
         this.#todoList.splice(index, 1);
     };
 
 };
-

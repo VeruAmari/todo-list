@@ -1,5 +1,7 @@
 import { Project } from './projectObj.js';
 import { Todo } from './todoObj.js';
+import { Checklist } from './checklistObj.js';
+import { UIProject } from './ui.js';
 
 
 function testFunction(){
@@ -11,15 +13,19 @@ function testFunction(){
 
   const testProject = new Project("Test Project");
 
-  console.log(testProject.addTodoList(test1));
-  console.log(testProject.addTodoList(test2));
-  console.log(testProject.addTodoList(test3));
+  testProject.addTodo(test1);
+  testProject.addTodo(test2);
+  testProject.addTodo(test3);
 
   //console.log(testProject);
-
+  console.log("Calling getTodoList");
   console.log(testProject.getTodoList());
   //testProject.removeTodo(1);
   //console.log(testProject, testProject.getTodoList());
+  const uiTest = new UIProject("Title 1");
+  console.log(uiTest);
+  const uiTest2 = new UIProject("Title 2");
+  console.log(uiTest2);
 }
 
 testFunction();
