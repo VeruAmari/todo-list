@@ -14,4 +14,4 @@ export class ChecklistItem {
     // Status methods //
     getStatus = () => { this.#status };
     toggleStatus = () => { this.#status = this.#status ? false : true; };
-}
+};

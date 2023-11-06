@@ -1,3 +1,5 @@
+// import {ChecklistItem} from './checklistObj';
+
 export class Todo {
 
     #title;

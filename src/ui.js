@@ -2,18 +2,27 @@
 
 // Function that create a Project card:
 export class UIProject {
+    #idNum;
+    #title;
+    #containerID;
+    #statusBool;
+    #status;
+    #titleContainer;
+    #todosContainer;
+    #container;
+
     constructor(title) {
         console.log("Creating " + title + " UIProject.")
-        this.idNum = UIProject.id;
+        this.#idNum = UIProject.id;
         UIProject.id++;
 
-        this.title = this.#makeTitle(title);
-        this.containerID = "project-" + this.idNum;
-        this.statusBool = false;
-        this.status = this.#makeStatus();
-        this.titleContainer = this.#makeTitleContainer(this.title, this.status);
-        this.todosContainer = this.#makeTodosContainer();
-        this.container = this.#makeContainer(this.containerID, this.titleContainer, this.todosContainer);
+        this.#title = this.#makeTitle(title);
+        this.#containerID = "project-" + this.#idNum;
+        this.#statusBool = false;
+        this.#status = this.#makeStatus();
+        this.#titleContainer = this.#makeTitleContainer(this.#title, this.#status);
+        this.#todosContainer = this.#makeTodosContainer();
+        this.#container = this.#makeContainer(this.#containerID, this.#titleContainer, this.#todosContainer);
 
         // Finishing up
         this.#finishUp();
@@ -69,40 +78,52 @@ export class UIProject {
 
     #finishUp() {
         const parent = document.querySelector(".body.inner-container");
-        parent.appendChild(this.container);
+        parent.appendChild(this.#container);
     };
     //##############################################################//
 
-    updateTitle(newTitle) { this.title.textContent = newTitle };
+    updateTitle(newTitle) { this.#title.textContent = newTitle };
 
     toggleStatus = () => {
-        this.statusBool = this.statusBool ? false : true;
-        if (this.statusBool) {
-            this.status.textContent = "✔️"
-            this.status.classList.toggle("complete");
-            this.status.classList.toggle("in-progress");
+        this.#statusBool = this.#statusBool ? false : true;
+        if (this.#statusBool) {
+            this.#status.textContent = "✔️"
+            this.#status.classList.toggle("complete");
+            this.#status.classList.toggle("in-progress");
         } else {
-            this.status.textContent = "_";
-            this.status.classList.toggle("complete");
-            this.status.classList.toggle("in-progress");
+            this.#status.textContent = "_";
+            this.#status.classList.toggle("complete");
+            this.#status.classList.toggle("in-progress");
         };
 
     };
 
     appendTodo(element) {
-        this.todosContainer.appendChild(element);
+        this.#todosContainer.appendChild(element);
     };
 
-    getProjectId = () => { return this.containerID };
-
+    // Getters
+    getProjectId = () => { return this.#containerID };
+    getStatus = () => { return this.#status };
+    getTitle = () => { return this.#title };
 };
 
 export class UITodo {
+    #idNum;
+    #title;
+    #description;
+    #due;
+    #priority;
+    #notes;
+    #checklist;
+    #statusBool;
+    #status;
+
     constructor(title, description, due, priority, notes){
-        this.idNum = UITodo.id;
+        this.#idNum = UITodo.id;
         UITodo.id++;
 
-        this.title = this.#makeTitle(title);
+        this.#title = this.#makeTitle(title);
 
     };
     static id = 0;
@@ -111,6 +132,7 @@ export class UITodo {
         const title = document.createElement("span");
         title.classList.add("todo","title");
         title.textContent = text;
+        return title;
     };
 };
 

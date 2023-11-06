@@ -9,8 +9,8 @@ function newProject (title) {
     const projectUI = new UIProject(title);
 
     // ProjectUI event listeners
-    projectUI.status.addEventListener("click", toggleStatus);
-    projectUI.title.addEventListener("dblclick", updateTitle);
+    projectUI.getStatus().addEventListener("click", toggleStatus);
+    projectUI.getTitle().addEventListener("dblclick", updateTitle);
 
     function toggleStatus() {
         projectUI.toggleStatus();
