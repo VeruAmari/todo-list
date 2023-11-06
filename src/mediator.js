@@ -1,7 +1,7 @@
 import { Project } from './projectObj.js';
 import { Todo } from './todoObj.js';
 import { Checklist } from './checklistObj.js';
-import { UIProject } from './ui.js';
+import { UIProject, UITodo } from './ui.js';
 
 
 function newProject (title) {
@@ -17,8 +17,8 @@ function newProject (title) {
         projectData.toggleStatus();
     };
 
-    function addTodo(todo) {
-        projectUI.appendTodo(todo);
+    function getID() {
+        return projectUI.getProjectId;
     };
 
     function updateTitle(event) {
@@ -28,23 +28,48 @@ function newProject (title) {
         projectUI.updateTitle(newTitle);
     };
 
-    return { addTodo, updateTitle };
+    function appendTodo(todo) {
+        projectUI.appendTodo(todo);
+    };
+    return { getID, updateTitle, appendTodo };
 };
 
-function newTodo (title) {
-    const todoData = new Todo(title);
-    const todoUI = new UITodo(title);
+function newTodo (title, description, due, priority, notes) {
+    const todoData = new Todo(
+                            title,
+                            description,
+                            due,
+                            priority,
+                            notes
+                            );
 
+    const todoUI = new UITodo(
+                    todoData.getTitle(),
+                    todoData.getDescription(),
+                    todoData.getDue(),
+                    todoData.getPriority(),
+                    todoData.getNotes()
+                    );
+
+    function getTodoNode () {
+        return todoUI.getTodo();
+    };
+    return { getTodoNode };
 };
 
 function testFunction(){
-    const test1 = new Todo("Title Test 1", "Some testing object 1.", "Right now 1!", 1, "Does this work 1?", {"one": true, "two": false});
-
-    const test2 = new Todo("Title Test 2", "Some testing object 2.", "Right now 2!", "a", "Does this work 2?", {"two": true, "three": false});
-
-    const test3 = new Todo("Title Test 3", "Some testing object 3.", "Right now 3!", 3, "Does this work 3?", {"three": true, "four": false});
-
     const project = newProject("Test Project");
+
+    const test1 = newTodo("Test TodoObj 1", "Testing notes for todo object 1.", "Due Right now 1!", 1, "Does this work 1?");
+
+    const test2 = newTodo("Test TodoObj 2", "Testing notes for todo object 2.", "Due Right now 2!", "a", "Does this work 2?");
+
+    const test3 = newTodo("Test TodoObj 3", "Testing notes for todo object 3.", "Due Right now 3!", 3, "Does this work 3?");
+
+    project.appendTodo(test1.getTodoNode());
+    project.appendTodo(test2.getTodoNode());
+    project.appendTodo(test3.getTodoNode());
+
 
     //testProject.addTodo(test1);
     //testProject.addTodo(test2);
