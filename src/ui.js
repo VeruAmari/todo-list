@@ -2,24 +2,62 @@
 
 // Function that create a Project card:
 export class UIProject {
-    constructor(title, parentQuery) {
+    constructor(title) {
+        console.log("Creating " + title + " UIProject.")
         this.idNum = UIProject.id;
         UIProject.id++;
 
         this.title = this.#makeTitle(title);
         this.containerID = "project-" + this.idNum;
+        this.statusBool = false;
         this.status = this.#makeStatus();
         this.titleContainer = this.#makeTitleContainer(this.title, this.status);
         this.todosContainer = this.#makeTodosContainer();
         this.container = this.#makeContainer(this.containerID, this.titleContainer, this.todosContainer);
 
         // Finishing up
-        this.#finishUp(parentQuery);
+        this.#finishUp();
+        console.log(title + " UIProject created.")
     };
     static id = 0;
 
+    /* Initial setup private methods */
+    //##############################################################//
+
+    #makeTitle(text) {
+        const title = document.createElement("span");
+        title.classList.add("project","title-text");
+        title.textContent = text;
+
+        return title;
+    };
+
+    #makeStatus() {
+        const statusBool =  document.createElement("button");
+        statusBool.classList.add("project","statusBool","in-progress");
+        statusBool.textContent = "_";
+
+        return statusBool;
+    };
+
+    #makeTitleContainer(title, statusBool) {
+        const titleContainer = document.createElement("div");
+        titleContainer.classList.add("project", "title-container");
+        titleContainer.appendChild(title);
+        titleContainer.appendChild(statusBool);
+        
+        return titleContainer;
+    };
+
+    
+    #makeTodosContainer() {
+        const todos = document.createElement("div");
+        todos.classList.add("todos","container");
+        
+        return todos;
+    };
+
     #makeContainer(id, title, todos) {
-        console.log("Creating project container")
         const container = document.createElement("div");
         container.classList.add("project", "container");
         container.id = id;
@@ -29,51 +67,52 @@ export class UIProject {
         return container;
     };
 
-    #makeStatus() {
-        const status =  document.createElement("span");
-        status.classList.add("project","status");
-        status.textContent = "In Progress";
-        return status;
-    };
-
-    #makeTitle(text) {
-        const title = document.createElement("span");
-        title.classList.add("project","title-text");
-        title.textContent = text;
-        return title;
-    };
-
-    #makeTitleContainer(title, status) {
-        const titleContainer = document.createElement("div");
-        titleContainer.classList.add("project", "title-container");
-        titleContainer.appendChild(title);
-        titleContainer.appendChild(status);
-        return titleContainer;
-    };
-
-    #makeTodosContainer() {
-        const todos = document.createElement("div");
-        todos.classList.add("todos","container");
-        return todos;
-    };
-
-    #finishUp(query) {
-        const parent = document.querySelector(query);
+    #finishUp() {
+        const parent = document.querySelector(".body.inner-container");
         parent.appendChild(this.container);
-        return parent;
     };
+    //##############################################################//
 
     updateTitle(newTitle) { this.title.textContent = newTitle };
-    
-    updateStatus(newStatus) { this.status.textContent = newStatus };
+
+    toggleStatus = () => {
+        this.statusBool = this.statusBool ? false : true;
+        if (this.statusBool) {
+            this.status.textContent = "✔️"
+            this.status.classList.toggle("complete");
+            this.status.classList.toggle("in-progress");
+        } else {
+            this.status.textContent = "_";
+            this.status.classList.toggle("complete");
+            this.status.classList.toggle("in-progress");
+        };
+
+    };
+
+    appendTodo(element) {
+        this.todosContainer.appendChild(element);
+    };
 
     getProjectId = () => { return this.containerID };
 
-//// It has a TITLE - Beside it, there's status Display
-//// It has a TODO LIST space
 };
 
+export class UITodo {
+    constructor(title, description, due, priority, notes){
+        this.idNum = UITodo.id;
+        UITodo.id++;
 
+        this.title = this.#makeTitle(title);
+
+    };
+    static id = 0;
+
+    #makeTitle(text) {
+        const title = document.createElement("span");
+        title.classList.add("todo","title");
+        title.textContent = text;
+    };
+};
 
 // Function that displays a single Todo in a Project object
 //// It has a TITLE 

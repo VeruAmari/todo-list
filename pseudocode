@@ -1,4 +1,5 @@
 
 [index]->[Mediator]-> [TodoObj]
+                  |-> [ListObj]
                   |-> [ProjectObj]
                   |-> [UI]

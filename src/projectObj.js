@@ -18,7 +18,10 @@ export class Project {
     // Title methods//
     getTitle = () => this.#title;
 
-    setTitle = (newTitle) => { this.#title = newTitle };
+    updateTitle = (newTitle) => {
+        this.#title = newTitle;
+        console.log(this.#title);
+    };
 
 
     // Status methods //
