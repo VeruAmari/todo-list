@@ -22,10 +22,13 @@ function testFunction(){
   console.log(testProject.getTodoList());
   //testProject.removeTodo(1);
   //console.log(testProject, testProject.getTodoList());
-  const uiTest = new UIProject("Title 1");
-  console.log(uiTest);
-  const uiTest2 = new UIProject("Title 2");
-  console.log(uiTest2);
-}
+
+  console.log("Starting UI test");
+
+  const uiTest = new UIProject("Title 1", ".body.inner-container");
+  const uiTest2 = new UIProject("Title 2", ".body.inner-container");
+
+  console.log("UI test ended.");
+};
 
 testFunction();
