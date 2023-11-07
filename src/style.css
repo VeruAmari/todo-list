@@ -1,5 +1,29 @@
-.container {
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
+:root {
+  /* Variables */
+  --color-1: tomato;
+  --color-2: lightseagreen;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+}
+.inner-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+}
+
+.project-container {
+  border: solid 1px var(--color-1);
+  padding: 1rem;
+}
+.todo-container {
+  border: solid 1px var(--color-2);
 }

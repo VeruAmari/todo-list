@@ -1,2 +1,4 @@
 import './style.css';
-import './mediator.js';
+import { testFunction, newTodo, newProject } from './mediator.js';
+
+testFunction();

@@ -4,7 +4,7 @@ import { Checklist } from './checklistObj.js';
 import { UIProject, UITodo } from './ui.js';
 
 
-function newProject (title) {
+export function newProject (title) {
     const projectData = new Project(title);
     const projectUI = new UIProject(title);
 
@@ -34,7 +34,7 @@ function newProject (title) {
     return { getID, updateTitle, appendTodo };
 };
 
-function newTodo (title, description, due, priority, notes) {
+export function newTodo (title, description, due, priority, notes) {
     const todoData = new Todo(
                             title,
                             description,
@@ -57,18 +57,20 @@ function newTodo (title, description, due, priority, notes) {
     return { getTodoNode };
 };
 
-function testFunction(){
-    const project = newProject("Test Project");
-
+export function testFunction(){
+    const project1 = newProject("Test Project 1");
+    const project2 = newProject("Test Project 2")
     const test1 = newTodo("Test TodoObj 1", "Testing notes for todo object 1.", "Due Right now 1!", 1, "Does this work 1?");
 
     const test2 = newTodo("Test TodoObj 2", "Testing notes for todo object 2.", "Due Right now 2!", "a", "Does this work 2?");
 
     const test3 = newTodo("Test TodoObj 3", "Testing notes for todo object 3.", "Due Right now 3!", 3, "Does this work 3?");
 
-    project.appendTodo(test1.getTodoNode());
-    project.appendTodo(test2.getTodoNode());
-    project.appendTodo(test3.getTodoNode());
+    project1.appendTodo(test1.getTodoNode());
+    project1.appendTodo(test2.getTodoNode());
+
+
+    project2.appendTodo(test3.getTodoNode());
 
 
     //testProject.addTodo(test1);
@@ -81,5 +83,3 @@ function testFunction(){
     //testProject.removeTodo(1);
     //console.log(testProject, testProject.getTodoList());
 };
-
-testFunction();
