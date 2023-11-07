@@ -1,28 +1,50 @@
-/* Pseudocode OOooOoOoohhh */
+class UIBasics {
+    constructor () {
+        this._id;
+        this._title;
+        this._status;
+        this._statusBool;
+    };
 
-// Function that create a Project card:
-export class UIProject {
+    updateTitle(newTitle) { this._title.textContent = newTitle };
+
+    toggleStatus() {
+        this._statusBool = !this._statusBool;
+        this._statusBool ? this._status.textContent = "✔️" : this._status.textContent = "_";
+        
+        this._status.classList.toggle("complete");
+        this._status.classList.toggle("in-progress");
+    };
+
+    // Getters
+    getId = () => { return this._ID };
+    getStatus = () => { return this._status };
+    getTitle = () => { return this._title };
+};
+
+// Class that creates a Project card container and all it's inner elements
+export class UIProject extends UIBasics {
     #idNum;
-    #title;
-    #containerID;
-    #statusBool;
-    #status;
     #titleContainer;
     #todosContainer;
     #container;
 
     constructor(title) {
+        super();
         console.log("Starting " + title + " UIProject creation.")
         this.#idNum = UIProject.id;
         UIProject.id++;
 
-        this.#title = this.#makeTitle(title);
-        this.#containerID = "project-" + this.#idNum;
-        this.#statusBool = false;
-        this.#status = this.#makeStatus();
-        this.#titleContainer = this.#makeTitleContainer(this.#title, this.#status);
+        // Public attributes
+        this._title = this.#makeTitle(title);
+        this._ID = "project-" + this.#idNum;
+        this._statusBool = false;
+        this._status = this.#makeStatus();
+
+        // Private attributes
+        this.#titleContainer = this.#makeTitleContainer(this._title, this._status);
         this.#todosContainer = this.#makeTodosContainer();
-        this.#container = this.#makeContainer(this.#containerID, this.#titleContainer, this.#todosContainer);
+        this.#container = this.#makeContainer(this._ID, this.#titleContainer, this.#todosContainer);
 
         // Finishing up
         this.#finishUp();
@@ -81,58 +103,45 @@ export class UIProject {
     };
     //##############################################################//
 
-    updateTitle(newTitle) { this.#title.textContent = newTitle };
-
-    toggleStatus() {
-        this.#statusBool = !this.#statusBool;
-        this.#statusBool ? this.#status.textContent = "✔️" : this.#status.textContent = "_";
-
-        this.#status.classList.toggle("complete");
-        this.#status.classList.toggle("in-progress");
-
-    };
-
     appendTodo(element) {
         this.#todosContainer.appendChild(element);
     };
 
-    // Getters
-    getProjectId = () => { return this.#containerID };
-    getStatus = () => { return this.#status };
-    getTitle = () => { return this.#title };
 };
 
-export class UITodo {
+// Class that creates a Todo card container and all it's inner elements.
+export class UITodo extends UIBasics {
     #idNum;
-    #id;
-    #title;
-    #status;
     #titleContainer;
     #description;
     #due;
     #priority;
     #notes;
     #checklist;
-    #statusBool;
     #todoContainer;
 
     constructor(title, description, due, priority, notes){
+        super();
+
         console.log("Starting " + title + " UITodo creation.");
         this.#idNum = UITodo.id;
         UITodo.id++;
 
-        this.#id =  "todo-" + this.#idNum;
-        this.#title = this.#makeTitle(title);
-        this.#statusBool = false;
-        this.#status = this.#makeStatus();
-        this.#titleContainer = this.#makeTitleContainer(this.#title, this.#status);
+        // Public attributes
+        this._ID =  "todo-" + this.#idNum;
+        this._title = this.#makeTitle(title);
+        this._statusBool = false;
+        this._status = this.#makeStatus();
+
+        // Private attributes
+        this.#titleContainer = this.#makeTitleContainer(this._title, this._status);
         this.#description = this.#makeDescription(description);
         this.#due = this.#makeDue(due);
         this.#priority = this.#makePriority(priority);
         this.#notes = this.#makeNotes(notes);
         this.#checklist = this.#makeChecklistContainer();
         this.#todoContainer = this.#makeTodoContainer(
-            this.#id, [
+            this.ID, [
             this.#titleContainer,
             this.#description,
             this.#due,
@@ -220,28 +229,11 @@ export class UITodo {
     };
     //#########################################################//
 
-    // Start of methds //
-
-    updateTitle(newTitle) { this.#title.textContent = newTitle };
-
-    toggleStatus() {
-        this.#statusBool = !this.#statusBool;
-        this.#statusBool ? this.#status.textContent = "✔️" : this.#status.textContent = "_";
-
-        this.#status.classList.toggle("complete");
-        this.#status.classList.toggle("in-progress");
-    };
+    // Start of own methds //
 
     appendChecklist(element) {
         this.#checklist.appendChild(element);
     };
 
-    getTodoId = () => { return this.#id };
-    getStatus = () => { return this.#status };
-    getTitle = () => { return this.#title };
     getTodo = () => { return this.#todoContainer };
 };
-
-// Function that displays a single Todo in a Project object
-//// It has a TITLE 
-//// It has a 
