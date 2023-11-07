@@ -84,16 +84,11 @@ export class UIProject {
     updateTitle(newTitle) { this.#title.textContent = newTitle };
 
     toggleStatus() {
-        this.#statusBool = this.#statusBool ? false : true;
-        if (this.#statusBool) {
-            this.#status.textContent = "✔️"
-            this.#status.classList.toggle("complete");
-            this.#status.classList.toggle("in-progress");
-        } else {
-            this.#status.textContent = "_";
-            this.#status.classList.toggle("complete");
-            this.#status.classList.toggle("in-progress");
-        };
+        this.#statusBool = !this.#statusBool;
+        this.#statusBool ? this.#status.textContent = "✔️" : this.#status.textContent = "_";
+
+        this.#status.classList.toggle("complete");
+        this.#status.classList.toggle("in-progress");
 
     };
 
@@ -230,16 +225,11 @@ export class UITodo {
     updateTitle(newTitle) { this.#title.textContent = newTitle };
 
     toggleStatus() {
-        this.#statusBool = this.#statusBool ? false : true;
-        if (this.#statusBool) {
-            this.#status.textContent = "✔️"
-            this.#status.classList.toggle("complete");
-            this.#status.classList.toggle("in-progress");
-        } else {
-            this.#status.textContent = "_";
-            this.#status.classList.toggle("complete");
-            this.#status.classList.toggle("in-progress");
-        };
+        this.#statusBool = !this.#statusBool;
+        this.#statusBool ? this.#status.textContent = "✔️" : this.#status.textContent = "_";
+
+        this.#status.classList.toggle("complete");
+        this.#status.classList.toggle("in-progress");
     };
 
     appendChecklist(element) {
