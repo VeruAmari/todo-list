@@ -1,3 +1,4 @@
+// Class that contains shared getter and setter methods to be inherited:
 class UIBasics {
     constructor () {
         this._id;
