@@ -230,7 +230,7 @@ export class UITodo {
     updateTitle(newTitle) { this.#title.textContent = newTitle };
 
     toggleStatus() {
-        this.#statusBool = thos.#statusBool ? false : true;
+        this.#statusBool = this.#statusBool ? false : true;
         if (this.#statusBool) {
             this.#status.textContent = "✔️"
             this.#status.classList.toggle("complete");
