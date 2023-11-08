@@ -3,7 +3,7 @@ export class Project {
     #ID
     #title;
     #status;
-    #todoList;
+    #todoListIDs;
 
     constructor(title) {
         // Prevent title size from surpassing 30 characters length
@@ -14,39 +14,41 @@ export class Project {
         // Initial status of a project is obviously "undone", so false
         this.#status = false;
         // Initialize empty array
-        this.#todoList = [];
+        this.#todoListIDs = [];
     };
     static id = 0;
 
 
-    // Title methods//
+    // Getter methods//
     getTitle = () => this.#title;
 
+    getStatus = () => this.#status ;
+
+    getTodoList = () => this.#todoListIDs ;
+
+    getID = () => this.#ID;
+
+
+    // Setter methods //
     updateTitle = (newTitle) => {
         this.#title = newTitle;
         console.log(this.#title);
     };
 
+    addTodo = (todoID) => {
+        this.#todoListIDs.push(todoID);
+        console.log("To-do" + todoID + "added successfully.");
+    };
 
-    // Status methods //
-    getStatus = () => this.#status ;
 
+    // Togglers and removers //
     toggleStatus = () => {
         this.#status = this.#status ? false : true;
     };
 
-
-    // Todo List methods //
-    addTodo = (todo) => {
-        this.#todoList.push(todo);
-        console.log("To-do added successfully.");
+    removeTodo = (id) => {
+        console.log("Removing Todo-list-item " + id);
+        const index = this.#todoListIDs.indexOf(id);
+        this.#todoListIDs.splice(index, 1);
     };
-
-    getTodoList = () => this.#todoList ;
-
-    removeTodo = (index) => {
-        console.log("Removing Todo-list at index " + index);
-        this.#todoList.splice(index, 1);
-    };
-
 };
