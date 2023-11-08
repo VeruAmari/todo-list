@@ -2,36 +2,17 @@ import { Project } from './projectObj.js';
 import { Todo } from './todoObj.js';
 import { Checklist } from './checklistObj.js';
 import { UIProject, UITodo } from './ui.js';
-import {} from './dbHandler.js';
+import { database } from './dbHandler.js';
 
-function dbHandler (){
-    // Save and retrieve all data necessary to create an object in memory
-    /*
-    A new Project object requires:
-    title
-    id
-    An existing Project object ALSO contains:
-    status
-    todolistids
-    A new Todo object requires:
-    title
-    description
-    due
-    priority
-    notes
-    projectID
-    id
-    An existing Todo ojbect ALSO contains:
-    
-    */
-};
-
-export function renderProject (arglist) {
+export function renderProject (...arglist) {
+    // Process user input through Project class
     const projectData = new Project(arglist);
+    // Add sanitized data to UI
+    const projectUI = new UIProject(projectData.getID(),projectData.getTitle());
 
-    const projectUI = new UIProject(title);
+    // TODO: Add data to database (localStorage will do for now)
 
-    // ProjectUI event listeners
+    // Add ProjectUI event listeners
     projectUI.getStatus().addEventListener("click", toggleStatus);
     projectUI.getTitle().addEventListener("dblclick", updateTitle);
 
@@ -40,7 +21,7 @@ export function renderProject (arglist) {
         projectData.toggleStatus();
     };
 
-    function getID() {
+    function getDivID() {
         return projectUI.getProjectId;
     };
 
@@ -54,7 +35,7 @@ export function renderProject (arglist) {
     function appendTodo(todo) {
         projectUI.appendTodo(todo);
     };
-    return { getID, updateTitle, appendTodo };
+    return { getDivID, updateTitle, appendTodo };
 };
 
 export function newTodo (title, description, due, priority, notes) {
@@ -81,19 +62,25 @@ export function newTodo (title, description, due, priority, notes) {
 };
 
 export function testFunction(){
-    const project1 = newProject("Test Project 1");
-    const project2 = newProject("Test Project 2")
-    const test1 = newTodo("Test TodoObj 1", "Testing notes for todo object 1.", "Due Right now 1!", 1, "Does this work 1?");
+    const project1 = renderProject("To Do List");
+    const project2 = renderProject("D&D Rogue Concept");
 
-    const test2 = newTodo("Test TodoObj 2", "Testing notes for todo object 2.", "Due Right now 2!", "a", "Does this work 2?");
+    // Takes in a Title, Description, Due Date, Priority and Notes
+    // TODO: format DATE using date-fns (https://date-fns.org/docs/Getting-Started/)
+    const todo1 = newTodo("Plan ahead",
+                        "Create code module-architecture in pseudo-code for better results. Should keep in mind the SOLID principles.",
+                        new Date(1/2/34),
+                        5,
+                        "Must not be upside-down.");
 
-    const test3 = newTodo("Test TodoObj 3", "Testing notes for todo object 3.", "Due Right now 3!", 3, "Does this work 3?");
+    const todo2 = newTodo("Create modules files.", "Creating modules files following the pre-planned architecture.", new Date(1/2/34), "a", "This one SHOULD be upside down.");
 
-    project1.appendTodo(test1.getTodoNode());
-    project1.appendTodo(test2.getTodoNode());
+    const todo3 = newTodo("Search for art references.", "A good concept art starts with a good reference search. Build the theme and aesthetics of the character throug visual exploration.", new Date(1/2/34), 3, "To be upside down or not to be upside down?");
 
+    project1.appendTodo(todo1.getTodoNode());
+    project1.appendTodo(todo2.getTodoNode());
 
-    project2.appendTodo(test3.getTodoNode());
+    project2.appendTodo(todo3.getTodoNode());
 
 
     //testProject.addTodo(test1);

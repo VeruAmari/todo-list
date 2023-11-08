@@ -14,7 +14,7 @@ class UIBasics {
 
     toggleStatus() {
         this._statusBool = !this._statusBool;
-        this._statusBool ? this._status.textContent = "✔️" : this._status.textContent = "_";
+        this._statusBool ? this._status.textContent = "✔️" : this._status.textContent = "⭕";
         
         this._status.classList.toggle("complete");
         this._status.classList.toggle("in-progress");
@@ -33,7 +33,7 @@ class UIBasics {
         const status = document.createElement("button");
         status.classList.add(type, "status-btn", "in-progress");
     
-        if (statusBool){status.classList.add("in-progress"); status.textContent = "_";} else {
+        if (!statusBool){status.classList.add("in-progress"); status.textContent = "⭕";} else {
                         status.classList.add("complete"); status.textContent = "✔️";};
 
         return status;

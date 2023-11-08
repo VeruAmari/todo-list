@@ -5,7 +5,7 @@ export class ChecklistItem {
     #title;
     #status;
 
-    constructor(title, parentID, id) {
+    constructor(title, todoID, id) {
 
         if (id) { this.#ID = id }
         else {
@@ -13,7 +13,7 @@ export class ChecklistItem {
             ChecklistItem.id++;
         };
     
-        this.#pID = parentID;
+        this.#pID = todoID;
         this.#title = title;
         this.#status = false;
     }
@@ -27,7 +27,7 @@ export class ChecklistItem {
 
     getID = () => { this.#ID };
 
-    getParentID = () => { this.#pID };
+    getTodoID = () => { this.#pID };
 
 
     // Setter methods //
