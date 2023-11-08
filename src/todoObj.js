@@ -2,6 +2,8 @@
 
 export class Todo {
 
+    #ID
+    #pID
     #title;
     #description;
     #due;
@@ -10,7 +12,10 @@ export class Todo {
     #checklist;
     #status;
 
-    constructor(title, description, due, priority, notes) {
+    constructor(title, description, due, priority, notes, projectID) {
+        this.#ID = Todo.id;
+        Todo.id++;
+        this.#pID = projectID;
         console.log("Creating new Todo: " + title);
         this.#title = title;
         this.#description = description;
@@ -20,29 +25,25 @@ export class Todo {
         this.#checklist = [];
         this.#status = false;
     };
+    static id = 0;
 
-
-    // Title methods //
+    // Getter methods //
     getTitle = () => this.#title;
-
-    setTitle = (newTitle) => { this.#title = newTitle };
-
-
-    // Description methods //
     getDescription = () => this.#description;
-
-    setDescription = (newDescription) => { this.#description = newDescription };
-
-
-    // Due Date-time methods //
     getDue = () => this.#due;
-
-    setDue = (newDue) => { this.#due = newDue };
-
-
-    // Priority methods //
     getPriority = () => this.#priority;
-
+    getNotes = () => { this.#notes };
+    getStatus = () => this.#status;
+    getChecklist = () => this.#checklist;
+    getId = () => this.#ID;
+    getParentId = () => this.#pID;
+    
+    
+    
+    // Setter methods //
+    setTitle = (newTitle) => { this.#title = newTitle };
+    setDescription = (newDescription) => { this.#description = newDescription };
+    setDue = (newDue) => { this.#due = newDue };
     setPriority = (newPriority) => {
         if (newPriority >= 0 && newPriority <= 10) {
             this.#priority = newPriority
@@ -51,23 +52,12 @@ export class Todo {
             return false;
         }
     };
-
-
-    // Notes methods //
-    getNotes = () => { this.#notes };
-
     setNotes = (newNotes) => { this.#notes = newNotes };
-
-
-    // Checklist methods //
-    getChecklist = () => this.#checklist;
+    // Toggles and Modifiers //
     addChecklistItem = (newChecklistItem) => { this.#checklist.push(newChecklistItem); };
     removeChecklistItem = (index) => { this.#checklist.splice(index, 1); };
-
-
-    // Status methods //
-    getStatus = () => this.#status;
     toggleStatus = () => {
         this.#status = this.#status ? false : true;
     };
+
 };

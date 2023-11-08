@@ -1,10 +1,11 @@
 // Class that contains shared getter and setter methods to be inherited:
 class UIBasics {
-    constructor () {
-        this._id;
+    constructor (id, status) {
+        this._ID = id;
+        this._divID;
         this._title;
         this._status;
-        this._statusBool;
+        this._statusBool = status;
         this._titleContainer;
         this._type;
     };
@@ -28,10 +29,12 @@ class UIBasics {
         return title;
     };
 
-    _makeStatus(type){
+    _makeStatus(type, statusBool){
         const status = document.createElement("button");
         status.classList.add(type, "status-btn", "in-progress");
-        status.textContent = "_";
+    
+        if (statusBool){status.classList.add("in-progress"); status.textContent = "_";} else {
+                        status.classList.add("complete"); status.textContent = "✔️";};
 
         return status;
     };
@@ -57,40 +60,35 @@ class UIBasics {
     };
 
     // Getters
-    getId = () => { return this._ID };
+    getdID = () => { return this._divID };
     getStatus = () => { return this._status };
     getTitle = () => { return this._title };
 };
 
 // Class that creates a Project card container and all it's inner elements
 export class UIProject extends UIBasics {
-    #idNum;
     #todosContainer;
     #container;
 
-    constructor(title) {
+    constructor(id, title, status) {
         console.log("Starting " + title + " UIProject creation.")
-        super();
-        this.#idNum = UIProject.id;
-        UIProject.id++;
+        super(id, status);
 
         // Public attributes
         this._type = "project";
         this._title = this._makeTitle(this._type, title);
-        this._ID = this._type + "-" + this.#idNum;
-        this._statusBool = false;
-        this._status = this._makeStatus(this._type);
+        this._divID = this._type + "-" + this._ID;
+        this._status = this._makeStatus(this._type, this._statusBool);
         this._titleContainer = this._makeTitleContainer(this._type, this._title, this._status);
 
         // Private attributes
         this.#todosContainer = this.#makeTodosContainer();
-        this.#container = this._makeContainer(this._ID, this._type, this._titleContainer, this.#todosContainer);
+        this.#container = this._makeContainer(this._divID, this._type, this._titleContainer, this.#todosContainer);
 
         // Finishing up
         this.#finishUp();
         console.log(title + " UIProject creation successful.")
     };
-    static id = 0;
 
     /* Initial setup private methods */
     //##############################################################//
@@ -117,7 +115,6 @@ export class UIProject extends UIBasics {
 
 // Class that creates a Todo card container and all it's inner elements.
 export class UITodo extends UIBasics {
-    #idNum;
     #titleContainer;
     #description;
     #due;
@@ -126,18 +123,14 @@ export class UITodo extends UIBasics {
     #checklist;
     #container;
 
-    constructor(title, description, due, priority, notes){
+    constructor(id, title, description, due, priority, notes, status){
         console.log("Starting " + title + " UITodo creation.");
-        super();
-        this.#idNum = UITodo.id;
-        UITodo.id++;
-
+        super(id, status);
         // Public attributes
         this._type = "todo";
-        this._ID =  this._type + "-" + this.#idNum;
+        this._divID =  this._type + "-" + this._ID;
         this._title = this._makeTitle(this._type , title);
-        this._statusBool = false;
-        this._status = this._makeStatus(this._type);
+        this._status = this._makeStatus(this._type, this._statusBool);
 
         // Private attributes
         this.#titleContainer = this._makeTitleContainer(this._type ,this._title, this._status);
@@ -159,7 +152,6 @@ export class UITodo extends UIBasics {
 
         console.log( title + " UITodo creation successful.");
     };
-    static id = 0;
 
     // Initial setup private methods //
     //#########################################################//
@@ -215,24 +207,20 @@ export class UITodo extends UIBasics {
 };
 
 export class UIChecklistItem extends UIBasics {
-    #idNum;
     #container
-    constructor (title) {
-        super();
-        this.#idNum = UIChhecklist.id;
+    constructor (id, title, status) {
+        super(id, status);
         // Public attributes //
         this._type = "checklist-item"
-        this._ID = this._type + "-" + this.#idNum;
+        this._divID = this._type + "-" + this._ID;
         this._title = this._makeTitle("checklist-item", title);
-        this._statusBool = false;
-        this._status = this._makeStatus("checklist-item");
+        this._status = this._makeStatus("checklist-item", this._statusBool);
         this._titleContainer = this._makeTitleContainer(this._type);
 
         // Private attributes //
-        this.#container = _makeContainer(this._ID, this._type, this._titleContainer);
+        this.#container = _makeContainer(this._divID, this._type, this._titleContainer);
 
     };
-    static id = 0;
 
     getChecklistItem = () => { return this.#container };
 };

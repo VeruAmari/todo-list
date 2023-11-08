@@ -1,17 +1,23 @@
 export class ChecklistItem {
+    #ID
+    #pID;
     #title;
     #status;
-    constructor(title) {
+    constructor(title, parentID) {
+        this.#ID = ChecklistItem.id;
+        ChecklistItem.id++;
+        this.#pID = parentID;
         this.#title = title;
         this.#status = false;
     }
-
-    // Title methods //
+    static id = 0;
+    // Getter methods //
     getTitle = () => { this.#title };
-    setTitle = (newTitle) => { this.#title = newTitle };
-
-
-    // Status methods //
     getStatus = () => { this.#status };
+    getID = () => { this.#ID };
+    getParentID = () => { this.#pID };
+
+    // Setter methods //
+    setTitle = (newTitle) => { this.#title = newTitle };
     toggleStatus = () => { this.#status = this.#status ? false : true; };
 };
