@@ -5,11 +5,30 @@ import { UIProject, UITodo } from './ui.js';
 import {} from './dbHandler.js';
 
 function dbHandler (){
-    sessionStorage.setItem()
+    // Save and retrieve all data necessary to create an object in memory
+    /*
+    A new Project object requires:
+    title
+    id
+    An existing Project object ALSO contains:
+    status
+    todolistids
+    A new Todo object requires:
+    title
+    description
+    due
+    priority
+    notes
+    projectID
+    id
+    An existing Todo ojbect ALSO contains:
+    
+    */
 };
 
-export function newProject (title) {
-    const projectData = new Project(title);
+export function renderProject (arglist) {
+    const projectData = new Project(arglist);
+
     const projectUI = new UIProject(title);
 
     // ProjectUI event listeners
