@@ -2,7 +2,11 @@ import { Project } from './projectObj.js';
 import { Todo } from './todoObj.js';
 import { Checklist } from './checklistObj.js';
 import { UIProject, UITodo } from './ui.js';
+import {} from './dbHandler.js';
 
+function dbHandler (){
+    sessionStorage.setItem()
+};
 
 export function newProject (title) {
     const projectData = new Project(title);

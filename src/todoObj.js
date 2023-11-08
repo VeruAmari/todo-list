@@ -12,9 +12,18 @@ export class Todo {
     #checklistIDs;
     #status;
 
-    constructor(title, description, due, priority, notes, projectID) {
-        this.#ID = Todo.id;
-        Todo.id++;
+    constructor(title, description, due, priority, notes, projectID, id, clIDs, statusBool) {
+
+        if (id) { 
+            console.log("Retrieving existing Todo " + id);
+            this.#ID = id
+        
+        }
+        else {
+            this.#ID = Todo.id;
+            Todo.id++;
+        };
+
         this.#pID = projectID;
         console.log("Creating new Todo: " + title);
         this.#title = title;
@@ -22,8 +31,8 @@ export class Todo {
         this.#due = due;
         this.#priority = (priority >= 0 && priority <= 10) ? priority : 0;
         this.#notes = notes;
-        this.#checklistIDs = [];
-        this.#status = false;
+        this.#checklistIDs = clIDs ? clIDs : [];
+        this.#status = statusBool ? statusBool : false;
     };
     static id = 0;
 

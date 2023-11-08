@@ -5,9 +5,14 @@ export class ChecklistItem {
     #title;
     #status;
 
-    constructor(title, parentID) {
-        this.#ID = ChecklistItem.id;
-        ChecklistItem.id++;
+    constructor(title, parentID, id) {
+
+        if (id) { this.#ID = id }
+        else {
+            this.#ID = ChecklistItem.id;
+            ChecklistItem.id++;
+        };
+    
         this.#pID = parentID;
         this.#title = title;
         this.#status = false;

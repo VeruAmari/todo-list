@@ -1,5 +1,6 @@
 
-[index]->[Mediator]-> [TodoObj]
-                  |-> [ListObj]
-                  |-> [ProjectObj]
+[index]->[Mediator]-> [ProjectObj]
+                  |-> [TodoObj]
+                  |-> [ChecklistObj]
                   |-> [UI]
+                  |-> [Local Storage Handler]
