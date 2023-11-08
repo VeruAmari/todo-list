@@ -66,10 +66,10 @@ export class Todo {
 
     setNotes = (newNotes) => { this.#notes = newNotes };
 
-
-    // Toggles and Modifiers //
     addChecklistItem = (newChecklistItem) => { this.#checklistIDs.push(newChecklistItem); };
 
+
+    // Toggles and Deleters //
     removeChecklistItem = (id) => {
         console.log("Removing checklist-item " + id);
         const index = this.#checklistIDs.indexOf(id);
