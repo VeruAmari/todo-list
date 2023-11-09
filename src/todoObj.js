@@ -54,7 +54,7 @@ export class Todo {
 
     getID = () => this.#ID;
 
-    getProjecttId = () => this.#pID;
+    getProjectId = () => this.#pID;
 
 
     // Setter methods //

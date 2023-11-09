@@ -3,6 +3,7 @@ export function database (){
 
     function newProject (id, title, todolistIDs, status) {
         
+        if (!localStorage["project-" + id])
         localStorage["project-" + id] = {
             "type": "project",
             "id": id,
@@ -13,30 +14,35 @@ export function database (){
     };
 
     function newTodo (id, title, description, due, priority, notes, projectID, checklistIDs, statusBool) {
-        localStorage["todo-" + id] =
-        {
-            "type": "todo",
-            "id": id,
-            "title": title,
-            "description": description,
-            "due": due,
-            "priority": priority,
-            "notes": notes,
-            "projectID": projectID,
-            "checklistIDs": checklistIDs,
-            "status": statusBool,
-        };    
+
+        if (!localStorage["todo-" + id]){
+            localStorage["todo-" + id] =
+            {
+                "type": "todo",
+                "id": id,
+                "title": title,
+                "description": description,
+                "due": due,
+                "priority": priority,
+                "notes": notes,
+                "projectID": projectID,
+                "checklistIDs": checklistIDs,
+                "status": statusBool,
+            };
+        };
     };    
 
     function newChecklistItem (id, title, todoID, status){
 
-        localStorage["checklistitem-" + id] =
-        {
-            "type": "checklistitem",
-            "id": id,
-            "title": title,
-            "todoID": todoID,
-            "status": status,
+        if (!localStorage["checklistitem-" + id]) {
+            localStorage["checklistitem-" + id] =
+            {
+                "type": "checklistitem",
+                "id": id,
+                "title": title,
+                "todoID": todoID,
+                "status": status,
+            };
         };
     };
 
