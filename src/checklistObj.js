@@ -5,7 +5,7 @@ export class ChecklistItem {
     #title;
     #status;
 
-    constructor(title, todoID, id) {
+    constructor(title, todoID, id, status) {
 
         if (id) { this.#ID = id }
         else {
@@ -15,19 +15,19 @@ export class ChecklistItem {
     
         this.#pID = todoID;
         this.#title = title;
-        this.#status = false;
+        this.#status = status ? status : false;
     }
     static id = 0;
 
 
     // Getter methods //
-    getTitle = () => { this.#title };
+    getTitle = () => { return this.#title };
 
-    getStatus = () => { this.#status };
+    getStatus = () => { return this.#status };
 
-    getID = () => { this.#ID };
+    getID = () => { return this.#ID };
 
-    getTodoID = () => { this.#pID };
+    getTodoID = () => { return this.#pID };
 
 
     // Setter methods //

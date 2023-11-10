@@ -63,17 +63,20 @@ export function database (){
 
     function modifyData (type, id, attribute, newdata) {
         const getdata = JSON.parse(localStorage.getItem(type + "-" + id));
-        
+        console.log("Modiffying", attribute, "attribute from", type, "number", id, "\n", "Old value:", getdata[attribute]);
         if (attribute === "checklistIDs" || attribute === "todolistIDs") {
-            getdata[attribute].push(newdata);
+            if (!getdata[attribute].includes(newdata)){
+                getdata[attribute].push(newdata);
+            }
         } else {
-            localStorage[type + "-" + id][attribute] = newdata;
+            getdata[attribute] = newdata;
         };
+    
         localStorage.setItem(type + "-" + id, JSON.stringify(getdata));
-        
+        console.log("New value:", getdata[attribute]);
     };
 
-    function getProjectCount(){ return JSON.parse(localStorage["projectcount"])};
+    function getProjectCount(){ return localStorage["projectcount"] ? JSON.parse(localStorage["projectcount"]) : false };
 
     return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjectCount };
 };

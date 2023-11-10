@@ -29,7 +29,7 @@ export class Todo {
         this.#title = title;
         this.#description = description;
         this.#due = due;
-        this.#priority = (priority >= 0 && priority <= 10) ? priority : 0;
+        this.#priority = (priority >= 0 && priority <= 3) ? priority : 0;
         this.#notes = notes;
         this.#checklistIDs = chklstIDs ? chklstIDs : [];
         this.#status = statusBool ? statusBool : false;
