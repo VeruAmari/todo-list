@@ -5,7 +5,7 @@ export class Project {
     #status;
     #todoListIDs;
 
-    constructor(title, id) {
+    constructor(title, id, status, todos) {
         // Prevent title size from surpassing 30 characters length
         console.log("Creating new Project: " + title);
     
@@ -15,11 +15,11 @@ export class Project {
             Project.id++;
         };
     
-        this.#title = (title.length <= 30) ? title : title.slice(0, 29);
+        this.#title = title;
         // Initial status of a project is obviously "undone", so false
-        this.#status = false;
+        this.#status = status ? status : false;
         // Initialize empty array
-        this.#todoListIDs = [];
+        this.#todoListIDs = todos ? todos : [];
     };
     static id = 0;
 

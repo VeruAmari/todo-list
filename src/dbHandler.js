@@ -2,57 +2,78 @@ export function database (){
     // Save and retrieve all data necessary to create an object in memory
 
     function newProject (id, title, todolistIDs, status) {
-        
-        if (!localStorage["project-" + id])
-        localStorage["project-" + id] = {
-            "type": "project",
-            "id": id,
-            "title": title,
-            "todolistIDs": todolistIDs,
-            "status": status,
+        let prjC = localStorage["projectcount"] ? JSON.parse(localStorage["projectcount"]) : 0;
+
+        if (!localStorage["project-" + id]){
+            prjC++;
+            localStorage.setItem("projectcount", prjC);
+            localStorage.setItem("project-" + id, JSON.stringify(
+                {
+                    "type": "project",
+                    "id": id,
+                    "title": title,
+                    "todolistIDs": todolistIDs,
+                    "status": status,
+                }
+            ))
         };
     };
 
-    function newTodo (id, title, description, due, priority, notes, projectID, checklistIDs, statusBool) {
+    function newTodo (id, title, description, due, priority, notes, projectID, checklistIDs, status) {
 
         if (!localStorage["todo-" + id]){
-            localStorage["todo-" + id] =
-            {
-                "type": "todo",
-                "id": id,
-                "title": title,
-                "description": description,
-                "due": due,
-                "priority": priority,
-                "notes": notes,
-                "projectID": projectID,
-                "checklistIDs": checklistIDs,
-                "status": statusBool,
-            };
+
+            localStorage.setItem("todo-" + id, JSON.stringify(
+                {
+                    "type": "todo",
+                    "id": id,
+                    "title": title,
+                    "description": description,
+                    "due": due,
+                    "priority": priority,
+                    "notes": notes,
+                    "projectID": projectID,
+                    "checklistIDs": checklistIDs,
+                    "status": status,
+                }
+            ))
         };
-    };    
+    };
 
     function newChecklistItem (id, title, todoID, status){
 
         if (!localStorage["checklistitem-" + id]) {
-            localStorage["checklistitem-" + id] =
-            {
-                "type": "checklistitem",
-                "id": id,
-                "title": title,
-                "todoID": todoID,
-                "status": status,
-            };
+            localStorage.setItem("checklistitem-" + id, JSON.stringify(
+                {
+                    "type": "checklistitem",
+                    "id": id,
+                    "title": title,
+                    "todoID": todoID,
+                    "status": status,
+                }
+            ))
         };
     };
 
     function getData (type, id){
-        return localStorage[type + "-" + id];
+        if (localStorage[type + "-" + id]){
+            return JSON.parse(localStorage[type + "-" + id]);
+        };
     };
 
     function modifyData (type, id, attribute, newdata) {
-        localStorage[type + "-" + id][attribute] = newdata;
+        const getdata = JSON.parse(localStorage.getItem(type + "-" + id));
+        
+        if (attribute === "checklistIDs" || attribute === "todolistIDs") {
+            getdata[attribute].push(newdata);
+        } else {
+            localStorage[type + "-" + id][attribute] = newdata;
+        };
+        localStorage.setItem(type + "-" + id, JSON.stringify(getdata));
+        
     };
 
-    return { newProject, newTodo, newChecklistItem, getData, modifyData };
+    function getProjectCount(){ return JSON.parse(localStorage["projectcount"])};
+
+    return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjectCount };
 };

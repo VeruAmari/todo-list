@@ -5,9 +5,30 @@ import { UIProject, UITodo } from './ui.js';
 import { database } from './dbHandler.js';
 import { format } from 'date-fns'
 
-
+// TODO: Fix fetching data looking weird.
+//
 export function fetchExistingData() {
     console.log(localStorage);
+    let totalLength = database().getProjectCount();
+    // Get projects
+    //
+    for (let i = 0; i < totalLength; i++) {
+        // Fetch project data from database
+        const data = database().getData("project", i);
+        console.log(data);
+
+        // Make project using retreived data
+        const project = makeNewProject(data["title"],data["id"], data["status"], data["todolistIDs"]);
+
+        // Get todos data for current project
+        database().getData("project", i)["todolistIDs"].forEach((todoID)=>{
+            console.log("\nTodo ID: " + todoID + "\n");
+            const tododata = database().getData("todo", todoID);
+            const todo = makeNewTodo(tododata["title"], tododata["description"], tododata["due"], tododata["priority"], tododata["notes"], tododata["projectID"], tododata["id"], tododata["checklistIDs"], tododata["status"]);
+            project.appendTodo(todo.getTodoNode());
+        });
+    };
+
 };
 export function initialRender() {
 };
@@ -15,18 +36,16 @@ export function initialRender() {
 
 export function makeNewProject(...arglist) {
     // Process user input through Project class
-    const projectData = new Project(arglist);
+    const projectData = new Project(...arglist);
     // Add sanitized data to UI
     const projectUI = new UIProject(projectData.getID(),projectData.getTitle());
 
-    // TODO: Add data to database (localStorage will do for now)
-    //
     database().newProject(
         projectData.getID(),
         projectData.getTitle(),
         projectData.getTodoList(),
-        projectData.getStatus());
-
+        projectData.getStatus(),
+        );
 
     // Add ProjectUI event listeners
     //
@@ -55,9 +74,13 @@ export function makeNewProject(...arglist) {
     function appendTodo(todo) {
         projectUI.appendTodo(todo);
     };
+    function updateProject(){};
 
+    function getID(){
+        return projectData.getID();
+    };
 
-    return { getDivID, updateTitle, appendTodo };
+    return { getDivID, updateTitle, appendTodo, updateProject, getID};
 };
 
 
@@ -87,9 +110,10 @@ export function makeNewTodo(...arglist) {
         todoData.getNotes(),
         todoData.getProjectId(),
         todoData.getChecklist(),
-        todoData.getStatus());
+        todoData.getStatus()
+        );
 
-
+        database().modifyData("project",todoData.getProjectId(),"todolistIDs", todoData.getID());
 
     // Add Todo event listeners
     //
@@ -107,8 +131,11 @@ export function makeNewTodo(...arglist) {
         return todoUI.getTodo();
     };
 
+    function getData() {
+        return todoData;
+    };
 
-    return { getTodoNode };
+    return { getTodoNode, getData };
 };
 
 
@@ -122,15 +149,18 @@ export function testFunction() {
                         "Create code module-architecture in pseudo-code for better results. Should keep in mind the SOLID principles.",
                         format( new Date(3045,1,10), 'dd/MM/yyyy'),
                         5,
-                        "Must not be upside-down.");
+                        "Must not be upside-down.", project1.getID());
 
-    const todo2 = makeNewTodo("Create modules files.", "Creating modules files following the pre-planned architecture.", format(new Date(3045,1,10), 'dd/MM/yyyy'), "a", "This one SHOULD be upside down.");
+    const todo2 = makeNewTodo("Create modules files.", "Creating modules files following the pre-planned architecture.", format(new Date(3045,1,10), 'dd/MM/yyyy'), "a", "This one SHOULD be upside down.", project1.getID());
 
-    const todo3 = makeNewTodo("Search for art references.", "A good concept art starts with a good reference search. Build the theme and aesthetics of the character throug visual exploration.", format(new Date(3045,1, 10), 'dd/MM/yyyy'), 3, "To be upside down or not to be upside down?");
+    const todo3 = makeNewTodo("Search for art references.", "A good concept art starts with a good reference search. Build the theme and aesthetics of the character throug visual exploration.", format(new Date(3045,1, 10), 'dd/MM/yyyy'), 3, "To be upside down or not to be upside down?", project2.getID());
 
     project1.appendTodo(todo1.getTodoNode());
+    project1.updateProject(todo1.getData().getID());
     project1.appendTodo(todo2.getTodoNode());
+    project1.updateProject(todo2.getData().getID());
 
     project2.appendTodo(todo3.getTodoNode());
+    project2.updateProject(todo3.getData().getID());
 
 };
