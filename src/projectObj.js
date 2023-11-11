@@ -9,13 +9,19 @@ export class Project {
         // Prevent title size from surpassing 30 characters length
         console.log("Creating new Project: " + title);
     
-        if (id) { this.#ID = id }
+        if (id) {
+            this.#ID = id;
+            console.log("project ID#", id, "provided.");
+            Project.id = id;
+        }
         else {
+            console.log("No Project ID# provided, creating new ID#", Project.id);
             this.#ID = Project.id;
-            Project.id++;
         };
+        Project.id++;
+        console.log("Project.id is now set to", Project.id);
     
-        this.#title = title;
+        this.#title = title ? title : "-";
         // Initial status of a project is obviously "undone", so false
         this.#status = status ? status : false;
         // Initialize empty array

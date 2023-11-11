@@ -111,6 +111,8 @@ export class UIProject extends UIBasics {
         this.#todosContainer.appendChild(element);
     };
 
+    getProjectNode = () => { return this.#container };
+
 };
 
 // Class that creates a Todo card container and all it's inner elements.
@@ -175,6 +177,11 @@ export class UITodo extends UIBasics {
     #makePriority(text) {
         const priority = document.createElement("div");
         priority.classList.add("todo","priority");
+        text = (text == 0) ? "Trivial" : text;
+        text = (text == 1) ? "Low" : text;
+        text = (text == 2) ? "Medium" : text;
+        text = (text == 3) ? "High" : text;
+
         priority.textContent = text;
     
         return priority;
@@ -227,4 +234,93 @@ export class UIChecklistItem extends UIBasics {
     };
 
     getChecklistItem = () => { return this.#container };
+};
+
+
+export function formCreator () {
+
+    function formContainer(type){
+        const form = document.createElement("form");
+        form.classList.add(type + "-container", "form");
+        return form;
+    };
+
+    function addFormElement(type, element, container, inputType){
+
+        inputType = inputType ? inputType : "text";
+        const title = document.createElement("div");
+        title.classList.add(type, element, "container", "form");
+        container.appendChild(title);
+    
+        // Make title input
+        const input = document.createElement("input");
+        input.setAttribute("type", inputType);
+        input.setAttribute("placeholder", "New " + type + " " + element);
+        input.setAttribute("name", element);
+        if (inputType === "number") {
+            input.setAttribute("min", 0);
+            input.setAttribute("max", 3);
+        };
+        input.classList.add(type, element, "form");
+        title.appendChild(input);
+    };
+
+    function addSubmitButton(container){
+
+        const submit = document.createElement("button");
+        submit.setAttribute("type", "submit");
+        submit.classList.add("submit", "btn");
+        submit.textContent = "Add";
+        container.appendChild(submit);
+    };
+
+    function projectForm() {
+        // Make project div
+        const type = "project"
+        const container = formContainer(type);
+    
+        // Make Title input field container
+        addFormElement(type, "title", container);
+    
+        addSubmitButton(container);
+    
+        // Append to document
+        document.querySelector(".body.inner-container").appendChild(container);
+        return container;
+    };
+
+    function todoForm() {
+        // Make todo form container
+        const container = formContainer("todo")
+        const type = "todo";
+
+        // Make Title container
+        addFormElement(type, "title", container);
+        addFormElement(type, "description" ,container);
+        addFormElement(type, "due", container, "date");
+        addFormElement(type, "priority", container, "number");
+        addFormElement(type, "notes" ,container);
+    
+        // Make Description input
+        // Make Due Date input
+        // Make Priority input
+        // Make Notes input
+        // Make submit button
+        addSubmitButton(container);
+    
+        // Append to project
+        return container;
+    };
+
+    function checklistItemForm() {
+        const type = "checklist-item";
+        const container = formContainer(type);
+    
+        addFormElement(type, "title", container);
+        addSubmitButton(container);
+    
+        return container;
+    };
+
+    return { projectForm, todoForm, checklistItemForm };
 };

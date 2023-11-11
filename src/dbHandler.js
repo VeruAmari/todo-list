@@ -2,11 +2,10 @@ export function database (){
     // Save and retrieve all data necessary to create an object in memory
 
     function newProject (id, title, todolistIDs, status) {
-        let prjC = localStorage["projectcount"] ? JSON.parse(localStorage["projectcount"]) : 0;
-
+        let prjIDL = localStorage["projectIDlist"] ? JSON.parse(localStorage["projectIDlist"]) : [];
         if (!localStorage["project-" + id]){
-            prjC++;
-            localStorage.setItem("projectcount", prjC);
+            prjIDL.push(id);
+            localStorage.setItem("projectIDlist", JSON.stringify(prjIDL));
             localStorage.setItem("project-" + id, JSON.stringify(
                 {
                     "type": "project",
@@ -76,7 +75,7 @@ export function database (){
         console.log("New value:", getdata[attribute]);
     };
 
-    function getProjectCount(){ return localStorage["projectcount"] ? JSON.parse(localStorage["projectcount"]) : false };
+    function getProjects(){ return localStorage["projectIDlist"] ? JSON.parse(localStorage["projectIDlist"]) : [] };
 
-    return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjectCount };
+    return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjects };
 };

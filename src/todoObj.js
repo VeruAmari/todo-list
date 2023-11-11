@@ -17,20 +17,20 @@ export class Todo {
         if (id) { 
             console.log("Retrieving existing Todo id#" + id);
             this.#ID = id
-        
+            Todo.id = id;
         }
         else {
             console.log("Creating new Todo id#" + id);
             this.#ID = Todo.id;
-            Todo.id++;
         };
+        Todo.id++;
 
         this.#pID = projectID;
-        this.#title = title;
-        this.#description = description;
-        this.#due = due;
+        this.#title = title ? title : "-";
+        this.#description = description ? description : "-";
+        this.#due = due ? due : "--/--/----";
         this.#priority = (priority >= 0 && priority <= 3) ? priority : 0;
-        this.#notes = notes;
+        this.#notes = notes ? notes : "-";
         this.#checklistIDs = chklstIDs ? chklstIDs : [];
         this.#status = statusBool ? statusBool : false;
     };
@@ -46,7 +46,7 @@ export class Todo {
 
     getPriority = () => this.#priority;
 
-    getNotes = () => { this.#notes };
+    getNotes = () =>  this.#notes ;
 
     getStatus = () => this.#status;
 

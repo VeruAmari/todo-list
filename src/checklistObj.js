@@ -7,14 +7,16 @@ export class ChecklistItem {
 
     constructor(title, todoID, id, status) {
 
-        if (id) { this.#ID = id }
+        if (id) {
+            this.#ID = id;
+            ChecklistItem.id = id;}
         else {
             this.#ID = ChecklistItem.id;
-            ChecklistItem.id++;
         };
+        ChecklistItem.id++;
     
         this.#pID = todoID;
-        this.#title = title;
+        this.#title = title ? title : " ";
         this.#status = status ? status : false;
     }
     static id = 0;

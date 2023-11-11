@@ -8,27 +8,34 @@
 * {
   padding: 0px;
   margin: 0px;
+  box-sizing: border-box;
 }
 
 body {
-  box-sizing: border-box;
   width: 100vw;
   height: 100vh;
 }
 .inner-container {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(265px,1fr));
 }
 
 .project-container {
+  display: grid;
   border: solid 1px var(--color-1);
   padding: 1rem;
 }
+.todos.container {
+  display: grid;
+}
 .todo-container {
+  display: grid;
   border: solid 1px var(--color-2);
   padding: 1rem;
 }
-.checklist-item {
+.checklist-item-container {
+  display: grid;
   border: solid 1px var(--color-3);
+  padding: .5rem;
 }

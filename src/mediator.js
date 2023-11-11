@@ -1,7 +1,7 @@
 import { Project } from './projectObj.js';
 import { Todo } from './todoObj.js';
 import { Checklist, ChecklistItem } from './checklistObj.js';
-import { UIChecklistItem, UIProject, UITodo } from './ui.js';
+import { UIChecklistItem, UIProject, UITodo, formCreator } from './ui.js';
 import { database } from './dbHandler.js';
 import { format } from 'date-fns'
 
@@ -9,18 +9,22 @@ import { format } from 'date-fns'
 // WARNING: THIS FUNCTION LOOKS LIKE SPAGHETTI
 //
 export function fetchExistingData() {
-    let projectCount = database().getProjectCount();
+    let projects = database().getProjects();
+    // Make sure there is data 
+    console.log(projects)
+
+
     // Get projects
     //
-    for (let i = 0; i < projectCount; i++) {
+    projects.forEach((projectID)=> {
         // Fetch project data from database
-        const data = database().getData("project", i);
+        const data = database().getData("project", projectID);
 
         // Make project using retreived data
         const project = makeNewProject(data["title"],data["id"], data["status"], data["todolistIDs"]);
 
         // Get todos data for current project
-        database().getData("project", i)["todolistIDs"].forEach((todoID)=>{
+        database().getData("project", projectID)["todolistIDs"].forEach((todoID)=>{
 
             const tododata = database().getData("todo", todoID);
             const todo = makeNewTodo(
@@ -47,16 +51,25 @@ export function fetchExistingData() {
                     checklidata["id"],
                     checklidata["status"],
                 );
-
+            
                 // Append checklist item to todo.
                 todo.appendChecklistItem(clI.getCLINode());
             });
         });
-    };
+
+    });
 
 };
+
 export function initialRender(){
-    //
+    const form = formCreator().projectForm();
+    function handleP(event){
+        event.preventDefault();
+        console.log("Creating new Project from Form.");
+        makeNewProject(event.target.title.value);
+        //makeNewProject()
+    };
+    form.addEventListener("submit", handleP);
 };
 
 
@@ -72,6 +85,28 @@ export function makeNewProject(...arglist) {
         projectData.getTodoList(),
         projectData.getStatus(),
         );
+
+    // Add Todo form
+
+    function handleT(event){
+        event.preventDefault();
+        console.log("Creating new Todo from form.");
+        console.log(event.target);
+        projectUI.appendTodo(
+            makeNewTodo(
+                event.target.title.value,
+                event.target.description.value,
+                event.target.due.value,
+                event.target.priority.value,
+                event.target.notes.value,
+                projectData.getID(),
+            ).getTodoNode()
+        );
+    };
+
+    const form = formCreator().todoForm()
+    form.addEventListener("submit", handleT);
+    projectUI.appendTodo(form);
 
     // Add ProjectUI event listeners
     //
@@ -107,7 +142,11 @@ export function makeNewProject(...arglist) {
         return projectData.getID();
     };
 
-    return { getDivID, updateTitle, appendTodo, getID};
+    function getProjectNode(){
+        return projectUI.getProjectNode();
+    };
+
+    return { getDivID, updateTitle, appendTodo, getID, getProjectNode };
 };
 
 export function makeNewTodo(...arglist) {
@@ -116,6 +155,7 @@ export function makeNewTodo(...arglist) {
     const todoData = new Todo(...arglist);
 
     // Once sanitized, they are added to the document.
+    //
     const todoUI = new UITodo(
         todoData.getID(),
         todoData.getTitle(),
@@ -126,6 +166,24 @@ export function makeNewTodo(...arglist) {
         todoData.getStatus(),
         );
 
+    // Add checklist item form
+    //
+
+    function handleC(event){
+        event.preventDefault();
+            event.preventDefault();
+            console.log("Creating new Todo from form.");
+            console.log(event.target);
+            todoUI.appendChecklistItem(
+                makeNewCheckLI(
+                    event.target.title.value,
+                    todoData.getID(),
+                ).getCLINode());
+        };
+
+    const form = formCreator().checklistItemForm()
+    form.addEventListener("submit", handleC);
+    todoUI.appendChecklist(form);
 
     // Add Todo to database
     //
@@ -143,6 +201,7 @@ export function makeNewTodo(...arglist) {
 
     // Append todo to corresponding list in project database
     //
+    //console.log("Debugging.\n", "Project failure is #", todoData.getProjectId());
     database().modifyData("project",todoData.getProjectId(),"todolistIDs", todoData.getID());
 
     // Add Todo event listeners
@@ -221,6 +280,7 @@ export function makeNewCheckLI(...arglist) {
 };
 
 export function testFunction() {
+    localStorage.clear();
     const project1 = makeNewProject("To Do List");
     const project2 = makeNewProject("D&D Rogue Concept");
 
