@@ -13,19 +13,19 @@ export class Todo {
     #status;
 
     constructor(title, description, due, priority, notes, projectID, id, chklstIDs, statusBool) {
-
+        this.#ID;
         if (id) { 
-            console.log("Retrieving existing Todo " + id);
+            console.log("Retrieving existing Todo id#" + id);
             this.#ID = id
         
         }
         else {
+            console.log("Creating new Todo id#" + id);
             this.#ID = Todo.id;
             Todo.id++;
         };
 
         this.#pID = projectID;
-        console.log("Creating new Todo: " + title);
         this.#title = title;
         this.#description = description;
         this.#due = due;

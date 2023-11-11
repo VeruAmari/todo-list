@@ -2,6 +2,7 @@
   /* Variables */
   --color-1: tomato;
   --color-2: lightseagreen;
+  --color-3: cornflowerblue;
 }
 
 * {
@@ -26,4 +27,8 @@ body {
 }
 .todo-container {
   border: solid 1px var(--color-2);
+  padding: 1rem;
+}
+.checklist-item {
+  border: solid 1px var(--color-3);
 }

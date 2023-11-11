@@ -117,11 +117,13 @@ export function makeNewTodo(...arglist) {
 
     // Once sanitized, they are added to the document.
     const todoUI = new UITodo(
+        todoData.getID(),
         todoData.getTitle(),
         todoData.getDescription(),
         todoData.getDue(),
         todoData.getPriority(),
-        todoData.getNotes()
+        todoData.getNotes(),
+        todoData.getStatus(),
         );
 
 
@@ -233,8 +235,7 @@ export function testFunction() {
         project1.getID()
     );
     project1.appendTodo(todo1.getTodoNode());
-    
-    const cLI = makeNewCheckLI("Come up with node names.", todo1.getID());
+    const cLI = makeNewCheckLI("Come up with module names.", todo1.getID());
     todo1.appendChecklistItem(cLI.getCLINode());
 
 
@@ -258,5 +259,11 @@ export function testFunction() {
         project2.getID()
     );
     project2.appendTodo(todo3.getTodoNode());
+    const cLI1 = makeNewCheckLI("Find references for sneaky characters.", todo3.getID());
+    const cLI2 = makeNewCheckLI("Find references for kunoichi.", todo3.getID());
+    const cLI3 = makeNewCheckLI("Find references for cool oriental rogue outfit.", todo3.getID());
+    todo3.appendChecklistItem(cLI1.getCLINode());
+    todo3.appendChecklistItem(cLI2.getCLINode());
+    todo3.appendChecklistItem(cLI3.getCLINode());
 
 };

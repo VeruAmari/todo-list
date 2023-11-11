@@ -42,9 +42,6 @@ class UIBasics {
     _makeTitleContainer(type, title, status){
         const titleContainer = document.createElement("div");
         titleContainer.classList.add(type, "title", "container");
-        console.log();
-        console.log("Logging title:\n", title);
-        console.log();
         titleContainer.appendChild(title);
         titleContainer.appendChild(status);
     
@@ -74,7 +71,7 @@ export class UIProject extends UIBasics {
     #container;
 
     constructor(id, title, status) {
-        console.log("Starting " + title + " UIProject creation.")
+        console.log("Starting UIProject #" + id + " creation.")
         super(id, status);
 
         // Public attributes
@@ -90,7 +87,7 @@ export class UIProject extends UIBasics {
 
         // Finishing up
         this.#finishUp();
-        console.log(title + " UIProject creation successful.")
+        console.log("UIProject #" + id + " creation successful.")
     };
 
     /* Initial setup private methods */
@@ -127,7 +124,7 @@ export class UITodo extends UIBasics {
     #container;
 
     constructor(id, title, description, due, priority, notes, status){
-        console.log("Starting " + title + " UITodo creation.");
+        console.log("Starting UITodo #" + id + " creation.");
         super(id, status);
         // Public attributes
         this._type = "todo";
@@ -143,7 +140,7 @@ export class UITodo extends UIBasics {
         this.#notes = this.#makeNotes(notes);
         this.#checklist = this.#makeChecklistContainer();
         this.#container = this._makeContainer(
-            this.ID,
+            this._divID,
             this._type,
             this.#titleContainer,
             this.#description,
@@ -153,7 +150,7 @@ export class UITodo extends UIBasics {
             this.#checklist
         );
 
-        console.log( title + " UITodo creation successful.");
+        console.log("UITodo #" + id + " creation successful.");
     };
 
     // Initial setup private methods //

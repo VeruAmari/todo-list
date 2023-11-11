@@ -5,6 +5,6 @@ import { testFunction, newTodo, newProject, fetchExistingData, initialRender } f
   console.log(localStorage);
 };*/
 fetchExistingData();
-//localStorage.clear();
-//testFunction();
-console.log(localStorage)
+// localStorage.clear();
+// testFunction();
+// console.log(localStorage)
