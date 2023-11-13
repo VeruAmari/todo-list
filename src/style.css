@@ -12,23 +12,29 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 .inner-container {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(265px,1fr));
+  grid-template-rows: 50%;
+  grid-template-columns: repeat(auto-fit, minmax(270px,1fr));
+  overflow-y: scroll;
 }
 
 .project-container {
   display: grid;
   border: solid 1px var(--color-1);
   padding: 1rem;
+
 }
 .todos.container,
 .todo.checklist {
   display: grid;
+  overflow-y: scroll;
 }
 .todo-container {
   display: grid;
@@ -44,4 +50,10 @@ body {
 .checklist-item-container.form,
 .project-container.form {
   order: 9999;
+}
+footer, header{
+  min-height: 3rem;
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }

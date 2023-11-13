@@ -5,6 +5,7 @@ class UIBasics {
         this._divID;
         this._title;
         this._status;
+        this._del = this._makeDelete();
         this._statusBool = statusBool;
         this._titleContainer;
         this._type;
@@ -29,6 +30,13 @@ class UIBasics {
         return title;
     };
 
+    _makeDelete(){
+        const del = document.createElement("button");
+        del.classList.add("delete");
+        del.textContent = "x";
+        return del
+    }
+
     _makeStatus(type, statusBool){
         const status = document.createElement("button");
         status.classList.add(type, "status-btn");
@@ -45,6 +53,7 @@ class UIBasics {
     _makeTitleContainer(type, title, status){
         const titleContainer = document.createElement("div");
         titleContainer.classList.add(type, "title", "container");
+        titleContainer.appendChild(this._del);
         titleContainer.appendChild(title);
         titleContainer.appendChild(status);
     
@@ -66,6 +75,7 @@ class UIBasics {
     getdID = () => { return this._divID };
     getStatus = () => { return this._status };
     getTitle = () => { return this._title };
+    getDel = () => { return this._del };
 };
 
 // Class that creates a Project card container and all it's inner elements

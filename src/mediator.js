@@ -5,7 +5,7 @@ import { UIChecklistItem, UIProject, UITodo, formCreator } from './ui.js';
 import { database } from './dbHandler.js';
 import { format } from 'date-fns'
 
-
+//localStorage["projectIDlist"] = JSON.stringify([0, 1]);
 // WARNING: THIS FUNCTION LOOKS LIKE SPAGHETTI
 //
 export function fetchExistingData() {
@@ -75,6 +75,9 @@ export function initialRender(){
     form.addEventListener("submit", handleP);
 };
 
+// Deleters
+//
+
 
 export function makeNewProject(...arglist) {
     // Process user input through Project class
@@ -98,7 +101,6 @@ export function makeNewProject(...arglist) {
     function handleT(event){
         event.preventDefault();
         console.log("Creating new Todo from form.");
-        console.log(event.target);
         projectUI.appendTodo(
             makeNewTodo(
                 event.target.title.value,
@@ -130,8 +132,27 @@ export function makeNewProject(...arglist) {
         projectUI.updateTitle(newTitle);
     };
 
+    function deleteProject(event){
+
+        // Delete ToDos from database
+        database().getData("project", projectData.getID())["todolistIDs"].forEach((todoID)=>{
+            // Delete checklistitems from database
+            database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
+                database().removeData("checklistitem", cLIID);
+            });
+
+            database().removeData("todo", todoID);
+        });
+        // Delete Project from database
+        database().removeData("project", projectData.getID());
+
+        // Delete from UI
+        projectUI.getProjectNode().remove();
+    };
+
     projectUI.getStatus().addEventListener("click", toggleAll);
     projectUI.getTitle().addEventListener("dblclick", updateTitle);
+    projectUI.getDel().addEventListener("click", deleteProject);
 
 
     // Utility methods to return
@@ -180,8 +201,7 @@ export function makeNewTodo(...arglist) {
         event.preventDefault();
             event.preventDefault();
             console.log("Creating new Todo from form.");
-            console.log(event.target);
-            todoUI.appendChecklistItem(
+            todoUI.appendChecklist(
                 makeNewCheckLI(
                     event.target.title.value,
                     todoData.getID(),
@@ -217,9 +237,21 @@ export function makeNewTodo(...arglist) {
         todoUI.toggleStatus();
         todoData.toggleStatus();
         database().modifyData("todo",todoData.getID(), "status", todoData.getStatus());
+
+    };
+    
+    function todoDelete(){
+        const todoID = todoData.getID();
+        database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
+            database().removeData("checklistitem", cLIID);
+        });
+        
+        database().removeData("todo", todoID);
+        todoUI.getTodo().remove();
     };
 
     todoUI.getStatus().addEventListener("click", toggleAll);
+    todoUI.getDel().addEventListener("click", todoDelete);
 
 
     // Utility methods to return
@@ -274,8 +306,14 @@ export function makeNewCheckLI(...arglist) {
         database().modifyData("checklistitem", checkLIData.getID(), "status", checkLIData.getStatus());
     };
 
-    checkLIUI.getStatus().addEventListener("click", toggleAll);
+    function cLIDelete(){
+        database().removeData("checklistitem", checkLIData.getID());
+        
+        checkLIUI.getChecklistItem().remove();
+    };
 
+    checkLIUI.getStatus().addEventListener("click", toggleAll);
+    checkLIUI.getDel().addEventListener("click", cLIDelete);
 
     // Utility methods to return
     //

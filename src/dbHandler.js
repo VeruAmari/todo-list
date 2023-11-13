@@ -75,7 +75,38 @@ export function database (){
         console.log("New value:", getdata[attribute]);
     };
 
+    function removeData (type, id) {
+        console.log("Deleting", type, "number", id,"\n");
+        if (type == "project") {
+            // Remove project ID from projects list
+            const projs = JSON.parse(localStorage["projectIDlist"]);
+            console.log("Previous project id list:", projs);
+            const index = projs.indexOf(id);
+            projs.splice(index, 1);
+            localStorage["projectIDlist"] = JSON.stringify(projs);
+            console.log("New project id list:", projs);
+        }
+            else if (type == "todo"){
+            // Remove todo from project's todo list
+            const projectID = getData(type, id)["projectID"];
+            const projectData = getData("project", projectID);
+            const index = projectData["todolistIDs"].indexOf(id);
+            projectData["todolistIDs"].splice(index, 1);
+            localStorage["project-"+projectID] = JSON.stringify(projectData);
+        }
+            else if (type == "checklistitem"){
+                // 
+            const todoID = getData(type, id)["todoID"];
+            const todoData = getData("todo", todoID);
+            const index = todoData["checklistIDs"].indexOf(id);
+            todoData["checklistIDs"].splice(index, 1);
+            localStorage["todo-"+todoID] = JSON.stringify(todoData);
+        }
+
+        localStorage.removeItem(type + "-" + id);
+    };
+
     function getProjects(){ return localStorage["projectIDlist"] ? JSON.parse(localStorage["projectIDlist"]) : [] };
 
-    return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjects };
+    return { newProject, newTodo, newChecklistItem, getData, modifyData, getProjects, removeData };
 };
