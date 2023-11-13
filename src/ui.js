@@ -232,7 +232,7 @@ export class UITodo extends UIBasics {
         text = (text == 1) ? "Low" : text;
         text = (text == 2) ? "Medium" : text;
         text = (text == 3) ? "High" : text;
-        
+
         this.#priority.textContent = text };
 
     getTodo = () => { return this.#container };
@@ -282,7 +282,12 @@ export function formCreator () {
         container.appendChild(title);
     
         // Make title input
-        const input = document.createElement("input");
+        let input;
+        if (element === "description" || element === "notes"){
+            input = document.createElement("textarea");
+        } else {
+            input = document.createElement("input");
+        }
         input.setAttribute("type", inputType);
         input.setAttribute("placeholder", "New " + type + " " + element);
         input.setAttribute("name", element);

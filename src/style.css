@@ -11,7 +11,7 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body {
@@ -110,18 +110,20 @@ header {
 .title {
   align-items: center;
 }
+.todo.title.container.form::before{
+  content: "Title";
+}
 .description::before{
-  content: "Description: ";
-
+  content: "Description";
 }
 .due::before{
-  content: "Due: ";
+  content: "Due";
 }
 .priority::before{
-  content: "Priority: ";
+  content: "Priority";
 }
 .notes::before{
-  content: "Notes: ";
+  content: "Notes";
 }
 a {
   display: grid;
@@ -137,4 +139,14 @@ a {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+.description.container.form,
+.notes.container.form,
+.due.container.form,
+.priority.container.form,
+.todo.title.container.form {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  color: var(--color-1);
 }
