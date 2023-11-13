@@ -9,7 +9,7 @@ export class Project {
         // Prevent title size from surpassing 30 characters length
         console.log("Creating new Project: " + title);
     
-        if (id) {
+        if (id || id === 0) {
             this.#ID = id;
             console.log("project ID#", id, "provided.");
             Project.id = id;

@@ -242,6 +242,7 @@ export function formCreator () {
     function formContainer(type){
         const form = document.createElement("form");
         form.classList.add(type + "-container", "form");
+        form.setAttribute("action", "#");
         return form;
     };
 

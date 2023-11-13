@@ -26,7 +26,8 @@ body {
   border: solid 1px var(--color-1);
   padding: 1rem;
 }
-.todos.container {
+.todos.container,
+.todo.checklist {
   display: grid;
 }
 .todo-container {
@@ -38,4 +39,9 @@ body {
   display: grid;
   border: solid 1px var(--color-3);
   padding: .5rem;
+}
+.todo-container.form,
+.checklist-item-container.form,
+.project-container.form {
+  order: 9999;
 }

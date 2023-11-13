@@ -7,7 +7,7 @@ export class ChecklistItem {
 
     constructor(title, todoID, id, status) {
 
-        if (id) {
+        if (id || id === 0) {
             this.#ID = id;
             ChecklistItem.id = id;}
         else {

@@ -14,7 +14,7 @@ export class Todo {
 
     constructor(title, description, due, priority, notes, projectID, id, chklstIDs, statusBool) {
         this.#ID;
-        if (id) { 
+        if (id || id === 0) { 
             console.log("Retrieving existing Todo id#" + id);
             this.#ID = id
             Todo.id = id;
