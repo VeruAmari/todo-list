@@ -69,6 +69,10 @@ button,
 .project-container.form {
   order: 9999;
 }
+.checklist-item-container.form,
+.project-container.form {
+  gap: .5rem;
+}
 footer, header{
   min-height: 3rem;
   display: grid;
@@ -149,4 +153,11 @@ a {
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;
   color: var(--color-1);
+}
+input,
+textarea{
+  border: 0px;
+  border-radius: var(--border-radius);
+  min-height: 2rem;
+  padding-left: .5rem;
 }
