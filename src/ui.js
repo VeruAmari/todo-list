@@ -1,11 +1,11 @@
 // Class that contains shared getter and setter methods to be inherited:
 class UIBasics {
-    constructor (id, status) {
+    constructor (id, statusBool) {
         this._ID = id;
         this._divID;
         this._title;
         this._status;
-        this._statusBool = status;
+        this._statusBool = statusBool;
         this._titleContainer;
         this._type;
     };
@@ -31,10 +31,13 @@ class UIBasics {
 
     _makeStatus(type, statusBool){
         const status = document.createElement("button");
-        status.classList.add(type, "status-btn", "in-progress");
+        status.classList.add(type, "status-btn");
     
-        if (!statusBool){status.classList.add("in-progress"); status.textContent = "⭕";} else {
-                        status.classList.add("complete"); status.textContent = "✔️";};
+        if (!statusBool){
+            status.classList.add("in-progress");
+            status.textContent = "⭕";
+            }else{
+                status.classList.add("complete"); status.textContent = "✔️";};
 
         return status;
     };
@@ -230,7 +233,6 @@ export class UIChecklistItem extends UIBasics {
             this._type,
             this._titleContainer
         );
-
     };
 
     getChecklistItem = () => { return this.#container };

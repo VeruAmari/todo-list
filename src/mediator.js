@@ -19,9 +19,12 @@ export function fetchExistingData() {
     projects.forEach((projectID)=> {
         // Fetch project data from database
         const data = database().getData("project", projectID);
-
         // Make project using retreived data
-        const project = makeNewProject(data["title"],data["id"], data["status"], data["todolistIDs"]);
+        const project = makeNewProject(
+            data["title"],
+            data["id"],
+            data["status"],
+            data["todolistIDs"]);
 
         // Get todos data for current project
         database().getData("project", projectID)["todolistIDs"].forEach((todoID)=>{
@@ -37,7 +40,7 @@ export function fetchExistingData() {
                 tododata["id"],
                 tododata["checklistIDs"],
                 tododata["status"]
-                );
+            );
 
             project.appendTodo(todo.getTodoNode());
 
@@ -77,7 +80,11 @@ export function makeNewProject(...arglist) {
     // Process user input through Project class
     const projectData = new Project(...arglist);
     // Add sanitized data to UI
-    const projectUI = new UIProject(projectData.getID(),projectData.getTitle());
+    const projectUI = new UIProject(
+        projectData.getID(),
+        projectData.getTitle(),
+        projectData.getStatus()
+    );
 
     database().newProject(
         projectData.getID(),
@@ -164,7 +171,7 @@ export function makeNewTodo(...arglist) {
         todoData.getPriority(),
         todoData.getNotes(),
         todoData.getStatus(),
-        );
+    );
 
     // Add checklist item form
     //
