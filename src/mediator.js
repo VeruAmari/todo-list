@@ -75,8 +75,76 @@ export function initialRender(){
     form.addEventListener("submit", handleP);
 };
 
-// Deleters
+// Update on click
 //
+function updateDataOnClick ( type, data, ui, attribute ) {
+    // TODO: On double click, display a field to enter the new title
+    const newData = prompt("New " + attribute);
+    if (newData) {
+        data.setTitle(newData);
+        ui.updateTitle(data.getTitle());
+        database().modifyData(
+            type,
+            data.getID(),
+            attribute,
+            data.getTitle()
+        );
+    };
+};
+
+function updateDescriptionOnClick ( type, data, ui, attribute ) {
+    // TODO: On double click, display a field to enter the new title
+    const newData = prompt("New " + attribute);
+    if (newData) {
+        data.setDescription(newData);
+        ui.updateDescription(data.getDescription());
+        database().modifyData(
+            type,
+            data.getID(),
+            attribute,
+            data.getDescription()
+        );
+    };
+};
+function updateDueOnClick (type, data, ui, attribute ){
+    const newData = prompt("New " + attribute);
+    if (newData) {
+        data.setDue(newData);
+        ui.updateDue(data.getDue());
+        database().modifyData(
+            type,
+            data.getID(),
+            attribute,
+            data.getDue()
+        );
+    };
+};
+function updatePriorityOnClick(type, data, ui, attribute ){
+    const newData = prompt("New " + attribute);
+    if (newData) {
+        data.setPriority(newData);
+        ui.updatePriority(data.getPriority());
+        database().modifyData(
+            type,
+            data.getID(),
+            attribute,
+            data.getPriority()
+        );
+    };
+};
+function updateNotesOnClick(type, data, ui, attribute ){
+    const newData = prompt("New " + attribute);
+    if (newData) {
+        data.setNotes(newData);
+        ui.updateNotes(data.getNotes());
+        database().modifyData(
+            type,
+            data.getID(),
+            attribute,
+            data.getNotes()
+        );
+    };
+};
 
 
 export function makeNewProject(...arglist) {
@@ -127,31 +195,31 @@ export function makeNewProject(...arglist) {
     
     function updateTitle(event) {
         // TODO: On double click, display a field to enter the new title
-        const newTitle = "title changed";
-        projectData.updateTitle(newTitle);
-        projectUI.updateTitle(newTitle);
+        updateDataOnClick( "project", projectData, projectUI, "title");
     };
 
     function deleteProject(event){
 
-        // Delete ToDos from database
-        database().getData("project", projectData.getID())["todolistIDs"].forEach((todoID)=>{
-            // Delete checklistitems from database
-            database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
-                database().removeData("checklistitem", cLIID);
+        if (confirm('Delete Project "' + projectData.getTitle() + '"?')){
+            // Delete ToDos from database
+            database().getData("project", projectData.getID())["todolistIDs"].forEach((todoID)=>{
+                // Delete checklistitems from database
+                database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
+                    database().removeData("checklistitem", cLIID);
+                });
+
+                database().removeData("todo", todoID);
             });
+            // Delete Project from database
+            database().removeData("project", projectData.getID());
 
-            database().removeData("todo", todoID);
-        });
-        // Delete Project from database
-        database().removeData("project", projectData.getID());
-
-        // Delete from UI
-        projectUI.getProjectNode().remove();
+            // Delete from UI
+            projectUI.getProjectNode().remove();
+        };
     };
 
     projectUI.getStatus().addEventListener("click", toggleAll);
-    projectUI.getTitle().addEventListener("dblclick", updateTitle);
+    projectUI.getTitle().addEventListener("click", updateTitle);
     projectUI.getDel().addEventListener("click", deleteProject);
 
 
@@ -233,25 +301,50 @@ export function makeNewTodo(...arglist) {
 
     // Add Todo event listeners
     //
+    function updateTitle () {
+        // TODO: On double click, display a field to enter the new title
+        updateDataOnClick( "todo", todoData, todoUI, "title");
+    };
+    function updateDescription(){
+        updateDescriptionOnClick ("todo", todoData, todoUI, "description" );
+    };
+
+    function updateDue(){
+        updateDueOnClick ("todo", todoData, todoUI, "due" );
+    };
+    function updatePriority(){
+        updatePriorityOnClick("todo", todoData, todoUI, "priority");
+    };
+    function updateNotes(){
+        updateNotesOnClick("todo", todoData, todoUI, "notes");
+    };
+
     function toggleAll() {
         todoUI.toggleStatus();
         todoData.toggleStatus();
         database().modifyData("todo",todoData.getID(), "status", todoData.getStatus());
-
     };
-    
+
     function todoDelete(){
-        const todoID = todoData.getID();
-        database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
-            database().removeData("checklistitem", cLIID);
-        });
-        
-        database().removeData("todo", todoID);
-        todoUI.getTodo().remove();
+        if (confirm('Delete Todo "' + todoData.getTitle() + '"?')){
+            const todoID = todoData.getID();
+            database().getData("todo", todoID)["checklistIDs"].forEach((cLIID)=>{
+                database().removeData("checklistitem", cLIID);
+            });
+            
+            database().removeData("todo", todoID);
+            todoUI.getTodo().remove();
+        };
     };
 
+
+    todoUI.getTitle().addEventListener("click", updateTitle);
     todoUI.getStatus().addEventListener("click", toggleAll);
     todoUI.getDel().addEventListener("click", todoDelete);
+    todoUI.getDescription().addEventListener("click", updateDescription);
+    todoUI.getDue().addEventListener("click", updateDue);
+    todoUI.getPriority().addEventListener("click", updatePriority)
+    todoUI.getNotes().addEventListener("click", updateNotes);
 
 
     // Utility methods to return
@@ -300,6 +393,11 @@ export function makeNewCheckLI(...arglist) {
 
     // Add checklist item event listeners
     //
+    function updateTitle (event) {
+        // TODO: On double click, display a field to enter the new title
+        updateDataOnClick( "checklistitem", checkLIData, checkLIUI, "title");
+    };
+
     function toggleAll() {
         checkLIUI.toggleStatus();
         checkLIData.toggleStatus();
@@ -307,11 +405,13 @@ export function makeNewCheckLI(...arglist) {
     };
 
     function cLIDelete(){
-        database().removeData("checklistitem", checkLIData.getID());
-        
-        checkLIUI.getChecklistItem().remove();
+        if (confirm('Delete Checklist Item "' + checkLIData.getTitle() + '"?')){
+            database().removeData("checklistitem", checkLIData.getID());
+            checkLIUI.getChecklistItem().remove();
+        }
     };
 
+    checkLIUI.getTitle().addEventListener("click",updateTitle);
     checkLIUI.getStatus().addEventListener("click", toggleAll);
     checkLIUI.getDel().addEventListener("click", cLIDelete);
 

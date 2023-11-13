@@ -27,8 +27,9 @@ body {
 
 .project-container {
   display: grid;
+  grid-template-rows: 2rem;
   border: solid 1px var(--color-1);
-  padding: 1rem;
+  padding: .5rem;
 
 }
 .todos.container,
@@ -56,4 +57,9 @@ footer, header{
   display: grid;
   align-items: center;
   justify-content: center;
+}
+.project.title.container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  height: fit-content;
 }

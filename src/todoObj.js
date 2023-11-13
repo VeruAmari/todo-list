@@ -28,8 +28,8 @@ export class Todo {
         this.#pID = projectID;
         this.#title = title ? title : "-";
         this.#description = description ? description : "-";
-        this.#due = due ? due : "--/--/----";
-        this.#priority = (priority >= 0 && priority <= 3) ? priority : 0;
+        this.#due = due ? this.setDue(due) : "--/--/----";
+        this.#priority = this.setPriority(priority);
         this.#notes = notes ? notes : "-";
         this.#checklistIDs = chklstIDs ? chklstIDs : [];
         this.#status = statusBool ? statusBool : false;
@@ -56,21 +56,23 @@ export class Todo {
 
     getProjectId = () => this.#pID;
 
-
     // Setter methods //
     setTitle = (newTitle) => { this.#title = newTitle };
 
     setDescription = (newDescription) => { this.#description = newDescription };
 
-    setDue = (newDue) => { this.#due = newDue };
+    setDue = (newDue) => {
+        this.#due = newDue;
+        return newDue;
+    };
 
     setPriority = (newPriority) => {
-        if (newPriority >= 0 && newPriority <= 10) {
-            this.#priority = newPriority
-            return true;
-        } else {
-            return false;
-        }
+        newPriority = Number(newPriority);
+        newPriority = (typeof(newPriority) === "NaN") ? newPriority : 0;
+        newPriority = (newPriority < 0) ? 0 : newPriority;
+        newPriority = (newPriority > 3) ? 3 : newPriority;
+        this.#priority = newPriority;
+        return newPriority;
     };
 
     setNotes = (newNotes) => { this.#notes = newNotes };

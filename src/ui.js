@@ -223,7 +223,23 @@ export class UITodo extends UIBasics {
         this.#checklist.appendChild(element);
     };
 
+    updateDescription(text) { this.#description.textContent = text};
+    updateDue(text) { this.#due.textContent = text};
+    updateNotes(text) { this.#notes.textContent = text };
+    updatePriority(text) {
+        
+        text = (text == 0) ? "Trivial" : text;
+        text = (text == 1) ? "Low" : text;
+        text = (text == 2) ? "Medium" : text;
+        text = (text == 3) ? "High" : text;
+        
+        this.#priority.textContent = text };
+
     getTodo = () => { return this.#container };
+    getDescription = () => { return this.#description };
+    getDue = () => { return this.#due };
+    getNotes = () => { return this.#notes };
+    getPriority = () => { return this.#priority };
 };
 
 export class UIChecklistItem extends UIBasics {

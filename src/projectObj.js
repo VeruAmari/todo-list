@@ -41,7 +41,7 @@ export class Project {
 
 
     // Setter methods //
-    updateTitle = (newTitle) => {
+    setTitle = (newTitle) => {
         this.#title = newTitle;
         console.log(this.#title);
     };
