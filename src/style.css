@@ -116,18 +116,23 @@ header {
 }
 .todo.title.container.form::before{
   content: "Title";
+  border-bottom: 2px dotted var(--color-1);
 }
 .description::before{
   content: "Description";
+  border-bottom: 2px dotted var(--color-1);
 }
 .due::before{
   content: "Due";
+  border-bottom: 2px dotted var(--color-1);
 }
 .priority::before{
   content: "Priority";
+  border-bottom: 2px dotted var(--color-1);
 }
 .notes::before{
   content: "Notes";
+  border-bottom: 2px dotted var(--color-1);
 }
 a {
   display: grid;
@@ -144,11 +149,11 @@ a {
   justify-content: center;
   gap: 1rem;
 }
-.description.container.form,
-.notes.container.form,
-.due.container.form,
-.priority.container.form,
-.todo.title.container.form {
+.todo.description,
+.todo.notes,
+.todo.due,
+.todo.priority,
+.todo.title{
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;

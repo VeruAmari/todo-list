@@ -68,7 +68,8 @@ export class Todo {
 
     setPriority = (newPriority) => {
         newPriority = Number(newPriority);
-        newPriority = (typeof(newPriority) === "NaN") ? newPriority : 0;
+        console.log("Debugging, logging newPriority",newPriority);
+        newPriority = (typeof(newPriority) === "NaN") ? 0 : newPriority;
         newPriority = (newPriority < 0) ? 0 : newPriority;
         newPriority = (newPriority > 3) ? 3 : newPriority;
         this.#priority = newPriority;
