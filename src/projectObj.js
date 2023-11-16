@@ -1,65 +1,64 @@
-export class Project {
+export default class Project {
+  #ID;
 
-    #ID
-    #title;
-    #status;
-    #todoListIDs;
+  #title;
 
-    constructor(title, id, status, todos) {
-        // Prevent title size from surpassing 30 characters length
-        console.log("Creating new Project: " + title);
-    
-        if (id || id === 0) {
-            this.#ID = id;
-            console.log("project ID#", id, "provided.");
-            Project.id = id;
-        }
-        else {
-            console.log("No Project ID# provided, creating new ID#", Project.id);
-            this.#ID = Project.id;
-        };
-        Project.id++;
-        console.log("Project.id is now set to", Project.id);
-    
-        this.#title = title ? title : "-";
-        // Initial status of a project is obviously "undone", so false
-        this.#status = status ? status : false;
-        // Initialize empty array
-        this.#todoListIDs = todos ? todos : [];
-    };
-    static id = 0;
+  #status;
 
+  #todoListIDs;
 
-    // Getter methods//
-    getTitle = () => this.#title;
+  constructor(title, id, status, todos) {
+    // Prevent title size from surpassing 30 characters length
+    console.log(`Creating new Project: ${  title}`);
 
-    getStatus = () => this.#status ;
+    if (id || id === 0) {
+      this.#ID = id;
+      console.log("project ID#", id, "provided.");
+      Project.id = id;
+    } else {
+      console.log("No Project ID# provided, creating new ID#", Project.id);
+      this.#ID = Project.id;
+    }
+    Project.id++;
+    console.log("Project.id is now set to", Project.id);
 
-    getTodoList = () => this.#todoListIDs ;
+    this.#title = title || "-";
+    // Initial status of a project is obviously "undone", so false
+    this.#status = status || false;
+    // Initialize empty array
+    this.#todoListIDs = todos || [];
+  }
 
-    getID = () => this.#ID;
+  static id = 0;
 
+  // Getter methods//
+  getTitle = () => this.#title;
 
-    // Setter methods //
-    setTitle = (newTitle) => {
-        this.#title = newTitle;
-        console.log(this.#title);
-    };
+  getStatus = () => this.#status;
 
-    addTodo = (todoID) => {
-        this.#todoListIDs.push(todoID);
-        console.log("To-do" + todoID + "added successfully.");
-    };
+  getTodoList = () => this.#todoListIDs;
 
+  getID = () => this.#ID;
 
-    // Togglers and removers //
-    toggleStatus = () => {
-        this.#status = this.#status ? false : true;
-    };
+  // Setter methods //
+  setTitle = (newTitle) => {
+    this.#title = newTitle;
+    console.log(this.#title);
+  };
 
-    removeTodo = (id) => {
-        console.log("Removing Todo-list-item " + id);
-        const index = this.#todoListIDs.indexOf(id);
-        this.#todoListIDs.splice(index, 1);
-    };
+  addTodo = (todoID) => {
+    this.#todoListIDs.push(todoID);
+    console.log(`To-do${  todoID  }added successfully.`);
+  };
+
+  // Togglers and removers //
+  toggleStatus = () => {
+    this.#status = !this.#status;
+  };
+
+  removeTodo = (id) => {
+    console.log(`Removing Todo-list-item ${  id}`);
+    const index = this.#todoListIDs.indexOf(id);
+    this.#todoListIDs.splice(index, 1);
+  };
 };

@@ -24,28 +24,28 @@ body {
 .inner-container {
   display: grid;
   grid-template-rows: 50%;
-  grid-template-columns: repeat(auto-fit, minmax(270px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   overflow-y: scroll;
   background-color: var(--color-2);
-  gap: .5rem;
-  padding: .5rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
 }
 
 button,
 .checklist-item-container,
 .todo-container,
 .todos,
-.project-container{
+.project-container {
   border-radius: var(--border-radius);
 }
 .container,
 .checklist {
-  gap: .5rem;
+  gap: 0.5rem;
 }
 .project-container {
   display: grid;
   grid-template-rows: 2rem;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: var(--color-1);
 }
 .todos.container,
@@ -55,13 +55,13 @@ button,
 }
 .todo-container {
   display: grid;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: var(--color-4);
   gap: 1rem;
 }
 .checklist-item-container {
   display: grid;
-  padding: .5rem;
+  padding: 0.5rem;
   background-color: var(--color-3);
 }
 .todo-container.form,
@@ -71,9 +71,10 @@ button,
 }
 .checklist-item-container.form,
 .project-container.form {
-  gap: .5rem;
+  gap: 0.5rem;
 }
-footer, header{
+footer,
+header {
   min-height: 3rem;
   display: grid;
   align-items: center;
@@ -93,8 +94,8 @@ footer, header{
 button {
   font-size: large;
   border: 0px;
-  padding-left: .3rem;
-  padding-right: .3rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
   display: grid;
   align-items: center;
   justify-content: center;
@@ -114,23 +115,23 @@ header {
 .title {
   align-items: center;
 }
-.todo.title.container.form::before{
+.todo.title.container.form::before {
   content: "Title";
   border-bottom: 2px dotted var(--color-1);
 }
-.description::before{
+.description::before {
   content: "Description";
   border-bottom: 2px dotted var(--color-1);
 }
-.due::before{
+.due::before {
   content: "Due";
   border-bottom: 2px dotted var(--color-1);
 }
-.priority::before{
+.priority::before {
   content: "Priority";
   border-bottom: 2px dotted var(--color-1);
 }
-.notes::before{
+.notes::before {
   content: "Notes";
   border-bottom: 2px dotted var(--color-1);
 }
@@ -153,16 +154,16 @@ a {
 .todo.notes,
 .todo.due,
 .todo.priority,
-.todo.title{
+.todo.title {
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;
   color: var(--color-1);
 }
 input,
-textarea{
+textarea {
   border: 0px;
   border-radius: var(--border-radius);
   min-height: 2rem;
-  padding-left: .5rem;
+  padding-left: 0.5rem;
 }

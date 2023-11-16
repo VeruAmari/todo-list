@@ -1,95 +1,117 @@
 // import {ChecklistItem} from './checklistObj';
 
-export class Todo {
+export default class Todo {
+  #ID;
 
-    #ID
-    #pID
-    #title;
-    #description;
-    #due;
-    #priority;
-    #notes;
-    #checklistIDs;
-    #status;
+  #pID;
 
-    constructor(title, description, due, priority, notes, projectID, id, chklstIDs, statusBool) {
-        this.#ID;
-        if (id || id === 0) { 
-            console.log("Retrieving existing Todo id#" + id);
-            this.#ID = id
-            Todo.id = id;
-        }
-        else {
-            console.log("Creating new Todo id#" + id);
-            this.#ID = Todo.id;
-        };
-        Todo.id++;
+  #title;
 
-        this.#pID = projectID;
-        this.#title = title ? title : "-";
-        this.#description = description ? description : "-";
-        this.#due = due ? this.setDue(due) : "--/--/----";
-        this.#priority = this.setPriority(priority);
-        this.#notes = notes ? notes : "-";
-        this.#checklistIDs = chklstIDs ? chklstIDs : [];
-        this.#status = statusBool ? statusBool : false;
-    };
-    static id = 0;
+  #description;
 
+  #due;
 
-    // Getter methods //
-    getTitle = () => this.#title;
+  #priority;
 
-    getDescription = () => this.#description;
+  #notes;
 
-    getDue = () => this.#due;
+  #checklistIDs;
 
-    getPriority = () => this.#priority;
+  #status;
 
-    getNotes = () =>  this.#notes ;
+  constructor(
+    title,
+    description,
+    due,
+    priority,
+    notes,
+    projectID,
+    id,
+    chklstIDs,
+    statusBool,
+  ) {
+    this.#ID;
+    if (id || id === 0) {
+      console.log(`Retrieving existing Todo id#${  id}`);
+      this.#ID = id;
+      Todo.id = id;
+    } else {
+      console.log(`Creating new Todo id#${  id}`);
+      this.#ID = Todo.id;
+    }
+    Todo.id++;
 
-    getStatus = () => this.#status;
+    this.#pID = projectID;
+    this.#title = title || "-";
+    this.#description = description || "-";
+    this.#due = due ? this.setDue(due) : "--/--/----";
+    this.#priority = this.setPriority(priority);
+    this.#notes = notes || "-";
+    this.#checklistIDs = chklstIDs || [];
+    this.#status = statusBool || false;
+  }
 
-    getChecklist = () => this.#checklistIDs;
+  static id = 0;
 
-    getID = () => this.#ID;
+  // Getter methods //
+  getTitle = () => this.#title;
 
-    getProjectId = () => this.#pID;
+  getDescription = () => this.#description;
 
-    // Setter methods //
-    setTitle = (newTitle) => { this.#title = newTitle };
+  getDue = () => this.#due;
 
-    setDescription = (newDescription) => { this.#description = newDescription };
+  getPriority = () => this.#priority;
 
-    setDue = (newDue) => {
-        this.#due = newDue;
-        return newDue;
-    };
+  getNotes = () => this.#notes;
 
-    setPriority = (newPriority) => {
-        newPriority = Number(newPriority);
-        console.log("Debugging, logging newPriority",newPriority);
-        newPriority = (typeof(newPriority) === "NaN") ? 0 : newPriority;
-        newPriority = (newPriority < 0) ? 0 : newPriority;
-        newPriority = (newPriority > 3) ? 3 : newPriority;
-        this.#priority = newPriority;
-        return newPriority;
-    };
+  getStatus = () => this.#status;
 
-    setNotes = (newNotes) => { this.#notes = newNotes };
+  getChecklist = () => this.#checklistIDs;
 
-    addChecklistItem = (newChecklistItem) => { this.#checklistIDs.push(newChecklistItem); };
+  getID = () => this.#ID;
 
+  getProjectId = () => this.#pID;
 
-    // Toggles and Deleters //
-    removeChecklistItem = (id) => {
-        console.log("Removing checklist-item " + id);
-        const index = this.#checklistIDs.indexOf(id);
-        this.#checklistIDs.splice(index, 1);
-    };
+  // Setter methods //
+  setTitle = (newTitle) => {
+    this.#title = newTitle;
+  };
 
-    toggleStatus = () => {
-        this.#status = this.#status ? false : true;
-    };
+  setDescription = (newDescription) => {
+    this.#description = newDescription;
+  };
 
+  setDue = (newDue) => {
+    this.#due = newDue;
+    return newDue;
+  };
+
+  setPriority = (newPriority) => {
+    newPriority = Number(newPriority);
+    console.log("Debugging, logging newPriority", newPriority);
+    newPriority = typeof newPriority === "NaN" ? 0 : newPriority;
+    newPriority = newPriority < 0 ? 0 : newPriority;
+    newPriority = newPriority > 3 ? 3 : newPriority;
+    this.#priority = newPriority;
+    return newPriority;
+  };
+
+  setNotes = (newNotes) => {
+    this.#notes = newNotes;
+  };
+
+  addChecklistItem = (newChecklistItem) => {
+    this.#checklistIDs.push(newChecklistItem);
+  };
+
+  // Toggles and Deleters //
+  removeChecklistItem = (id) => {
+    console.log(`Removing checklist-item ${  id}`);
+    const index = this.#checklistIDs.indexOf(id);
+    this.#checklistIDs.splice(index, 1);
+  };
+
+  toggleStatus = () => {
+    this.#status = !this.#status;
+  };
 };

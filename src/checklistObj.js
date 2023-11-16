@@ -1,39 +1,43 @@
-export class ChecklistItem {
+export default class ChecklistItem {
+  #ID;
 
-    #ID
-    #pID;
-    #title;
-    #status;
+  #pID;
 
-    constructor(title, todoID, id, status) {
+  #title;
 
-        if (id || id === 0) {
-            this.#ID = id;
-            ChecklistItem.id = id;}
-        else {
-            this.#ID = ChecklistItem.id;
-        };
-        ChecklistItem.id++;
-    
-        this.#pID = todoID;
-        this.#title = title ? title : " ";
-        this.#status = status ? status : false;
+  #status;
+
+  constructor(title, todoID, id, status) {
+    if (id || id === 0) {
+      this.#ID = id;
+      ChecklistItem.id = id;
+    } else {
+      this.#ID = ChecklistItem.id;
     }
-    static id = 0;
+    ChecklistItem.id += 1;
 
+    this.#pID = todoID;
+    this.#title = title || " ";
+    this.#status = status || false;
+  }
 
-    // Getter methods //
-    getTitle = () => { return this.#title };
+  static id = 0;
 
-    getStatus = () => { return this.#status };
+  // Getter methods //
+  getTitle = () => this.#title;
 
-    getID = () => { return this.#ID };
+  getStatus = () => this.#status;
 
-    getTodoID = () => { return this.#pID };
+  getID = () => this.#ID;
 
+  getTodoID = () => this.#pID;
 
-    // Setter methods //
-    setTitle = (newTitle) => { this.#title = newTitle };
+  // Setter methods //
+  setTitle = (newTitle) => {
+    this.#title = newTitle;
+  };
 
-    toggleStatus = () => { this.#status = this.#status ? false : true; };
+  toggleStatus = () => {
+    this.#status = !this.#status;
+  };
 };

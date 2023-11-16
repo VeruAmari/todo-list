@@ -1,11 +1,11 @@
-import './style.css';
-import { testFunction, newTodo, newProject, fetchExistingData, initialRender } from './mediator.js';
+import "./style.css";
+import { fetchExistingData, initialRender } from "./mediator";
 
-/*if (localStorage){
+/* if (localStorage){
   console.log(localStorage);
-};*/
+}; */
 fetchExistingData();
 
-//testFunction();
+// testFunction() // Re-import from mediator to use;
 // console.log(localStorage)
 initialRender();
