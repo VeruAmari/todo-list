@@ -7,7 +7,7 @@ import UIChecklistItem from "./uiCheckLI";
 import UITodo from "./uiTodo";
 import formCreator from "./uiForms";
 import database from "./dbHandler";
-
+/* eslint no-restricted-globals: "off", no-alert: "off", no-console: "off" */
 
 // Update on click
 //

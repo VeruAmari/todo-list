@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 export default function database() {
   // Save and retrieve all data necessary to create an object in memory
 

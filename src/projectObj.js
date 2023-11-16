@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 export default class Project {
   #ID;
 
@@ -19,7 +20,7 @@ export default class Project {
       console.log("No Project ID# provided, creating new ID#", Project.id);
       this.#ID = Project.id;
     }
-    Project.id++;
+    Project.id += 1;
     console.log("Project.id is now set to", Project.id);
 
     this.#title = title || "-";
