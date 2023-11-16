@@ -155,7 +155,7 @@ a {
 .todo.notes,
 .todo.due,
 .todo.priority,
-.todo.title.form{
+.todo.title.form {
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;

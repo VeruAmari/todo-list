@@ -2,7 +2,10 @@ import {format} from "date-fns";
 import Project  from "./projectObj";
 import Todo from "./todoObj";
 import ChecklistItem  from "./checklistObj";
-import { UIChecklistItem, UIProject, UITodo, formCreator } from "./ui";
+import UIProject from "./uiProject";
+import UIChecklistItem from "./uiCheckLI";
+import UITodo from "./uiTodo";
+import formCreator from "./uiForms";
 import database from "./dbHandler";
 
 
@@ -144,7 +147,7 @@ function makeNewTodo(...arglist) {
   function handleC(event) {
     event.preventDefault();
     event.preventDefault();
-    console.log("Creating new Todo from form.");
+    // console.log("Creating new Todo from form.");
     todoUI.appendChecklist(
       makeNewCheckLI(event.target.title.value, todoData.getID()).getCLINode(),
     );
@@ -273,7 +276,6 @@ function makeNewProject(...arglist) {
 
   function handleT(event) {
     event.preventDefault();
-    console.log("Creating new Todo from form.");
     projectUI.appendTodo(
       makeNewTodo(
         event.target.title.value,
@@ -303,12 +305,12 @@ function makeNewProject(...arglist) {
     );
   }
 
-  function updateTitle(event) {
+  function updateTitle() {
     // TODO: On double click, display a field to enter the new title
     updateDataOnClick("project", projectData, projectUI, "title");
   }
 
-  function deleteProject(event) {
+  function deleteProject() {
     if (confirm(`Delete Project "${  projectData.getTitle()  }"?`)) {
       // Delete ToDos from database
       database()
@@ -417,7 +419,7 @@ export function testFunction() {
 export function fetchExistingData() {
   const projects = database().getProjects();
   // Make sure there is data
-  console.log(projects);
+  // console.log(projects);
 
   // Get projects
   //
@@ -448,7 +450,6 @@ export function fetchExistingData() {
           tododata.checklistIDs,
           tododata.status,
         );
-
         project.appendTodo(todo.getTodoNode());
 
         // Get checklist data for current todo

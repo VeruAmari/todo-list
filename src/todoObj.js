@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // import {ChecklistItem} from './checklistObj';
 
 export default class Todo {
@@ -30,7 +31,6 @@ export default class Todo {
     chklstIDs,
     statusBool,
   ) {
-    this.#ID;
     if (id || id === 0) {
       console.log(`Retrieving existing Todo id#${  id}`);
       this.#ID = id;
@@ -39,7 +39,7 @@ export default class Todo {
       console.log(`Creating new Todo id#${  id}`);
       this.#ID = Todo.id;
     }
-    Todo.id++;
+    Todo.id += 1;
 
     this.#pID = projectID;
     this.#title = title || "-";
@@ -87,13 +87,13 @@ export default class Todo {
   };
 
   setPriority = (newPriority) => {
-    newPriority = Number(newPriority);
-    console.log("Debugging, logging newPriority", newPriority);
-    newPriority = typeof newPriority === "NaN" ? 0 : newPriority;
-    newPriority = newPriority < 0 ? 0 : newPriority;
-    newPriority = newPriority > 3 ? 3 : newPriority;
-    this.#priority = newPriority;
-    return newPriority;
+    let priority = Number(newPriority);
+    console.log("Debugging, logging newPriority", priority);
+    priority = (priority === "NaN") ? 0 : priority;
+    priority = priority <= 0 ? 0 : priority;
+    priority = priority >= 3 ? 3 : priority;
+    this.#priority = priority;
+    return priority;
   };
 
   setNotes = (newNotes) => {
