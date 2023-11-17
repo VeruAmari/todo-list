@@ -13,7 +13,7 @@ import database from "./dbHandler";
 //
 function updateTitleOnClick(type, data, ui, attribute) {
   // TODO: On double click, display a field to enter the new title
-  const newData = ''; // prompt(`New ${  attribute}`);
+  const newData = prompt(`New ${  attribute}`);
   if (newData) {
     data.setTitle(newData);
     ui.updateTitle(data.getTitle());
@@ -23,8 +23,8 @@ function updateTitleOnClick(type, data, ui, attribute) {
 
 function updateDescriptionOnClick(type, data, ui, attribute) {
   // TODO: On double click, display a field to enter the new title
-  formCreator().editTodoItem(ui.getDescription(),attribute,"description");
-  const newData = ''; // prompt(`New ${  attribute}`);
+  // formCreator().editTodoItem(ui.getDescription(),attribute,"description");
+  const newData = prompt(`New ${  attribute}`);
   if (newData) {
     data.setDescription(newData);
     ui.updateDescription(data.getDescription());
@@ -32,7 +32,7 @@ function updateDescriptionOnClick(type, data, ui, attribute) {
   }
 }
 function updateDueOnClick(type, data, ui, attribute) {
-  const newData = ''; // prompt(`New ${  attribute}`);
+  const newData = prompt(`New ${  attribute}`);
   if (newData) {
     data.setDue(newData);
     ui.updateDue(data.getDue());
@@ -40,7 +40,7 @@ function updateDueOnClick(type, data, ui, attribute) {
   }
 }
 function updatePriorityOnClick(type, data, ui, attribute) {
-  const newData = ''; // prompt(`New ${  attribute}`);
+  const newData = prompt(`New ${  attribute}`);
   if (newData) {
     data.setPriority(newData);
     ui.updatePriority(data.getPriority());
@@ -48,7 +48,7 @@ function updatePriorityOnClick(type, data, ui, attribute) {
   }
 }
 function updateNotesOnClick(type, data, ui, attribute) {
-  const newData = ''; // prompt(`New ${  attribute}`);
+  const newData = prompt(`New ${  attribute}`);
   if (newData) {
     data.setNotes(newData);
     ui.updateNotes(data.getNotes());
