@@ -11,9 +11,9 @@ import database from "./dbHandler";
 
 // Update on click
 //
-function updateDataOnClick(type, data, ui, attribute) {
+function updateTitleOnClick(type, data, ui, attribute) {
   // TODO: On double click, display a field to enter the new title
-  const newData = prompt(`New ${  attribute}`);
+  const newData = ''; // prompt(`New ${  attribute}`);
   if (newData) {
     data.setTitle(newData);
     ui.updateTitle(data.getTitle());
@@ -23,7 +23,8 @@ function updateDataOnClick(type, data, ui, attribute) {
 
 function updateDescriptionOnClick(type, data, ui, attribute) {
   // TODO: On double click, display a field to enter the new title
-  const newData = prompt(`New ${  attribute}`);
+  formCreator().editTodoItem(ui.getDescription(),attribute,"description");
+  const newData = ''; // prompt(`New ${  attribute}`);
   if (newData) {
     data.setDescription(newData);
     ui.updateDescription(data.getDescription());
@@ -31,7 +32,7 @@ function updateDescriptionOnClick(type, data, ui, attribute) {
   }
 }
 function updateDueOnClick(type, data, ui, attribute) {
-  const newData = prompt(`New ${  attribute}`);
+  const newData = ''; // prompt(`New ${  attribute}`);
   if (newData) {
     data.setDue(newData);
     ui.updateDue(data.getDue());
@@ -39,7 +40,7 @@ function updateDueOnClick(type, data, ui, attribute) {
   }
 }
 function updatePriorityOnClick(type, data, ui, attribute) {
-  const newData = prompt(`New ${  attribute}`);
+  const newData = ''; // prompt(`New ${  attribute}`);
   if (newData) {
     data.setPriority(newData);
     ui.updatePriority(data.getPriority());
@@ -47,7 +48,7 @@ function updatePriorityOnClick(type, data, ui, attribute) {
   }
 }
 function updateNotesOnClick(type, data, ui, attribute) {
-  const newData = prompt(`New ${  attribute}`);
+  const newData = ''; // prompt(`New ${  attribute}`);
   if (newData) {
     data.setNotes(newData);
     ui.updateNotes(data.getNotes());
@@ -87,7 +88,7 @@ function makeNewCheckLI(...arglist) {
   //
   function updateTitle() {
     // TODO: On double click, display a field to enter the new title
-    updateDataOnClick("checklistitem", checkLIData, checkLIUI, "title");
+    updateTitleOnClick("checklistitem", checkLIData, checkLIUI, "title");
   }
 
   function toggleAll() {
@@ -185,7 +186,7 @@ function makeNewTodo(...arglist) {
   //
   function updateTitle() {
     // TODO: On double click, display a field to enter the new title
-    updateDataOnClick("todo", todoData, todoUI, "title");
+    updateTitleOnClick("todo", todoData, todoUI, "title");
   }
   function updateDescription() {
     updateDescriptionOnClick("todo", todoData, todoUI, "description");
@@ -307,7 +308,7 @@ function makeNewProject(...arglist) {
 
   function updateTitle() {
     // TODO: On double click, display a field to enter the new title
-    updateDataOnClick("project", projectData, projectUI, "title");
+    updateTitleOnClick("project", projectData, projectUI, "title");
   }
 
   function deleteProject() {

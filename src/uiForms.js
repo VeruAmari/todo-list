@@ -2,7 +2,7 @@
 export default function formCreator() {
   function formContainer(type) {
     const form = document.createElement("form");
-    form.classList.add(`${type  }-container`, "form");
+    form.classList.add(`${type}-container`, "form");
     form.setAttribute("action", "#");
     return form;
   }
@@ -18,11 +18,21 @@ export default function formCreator() {
     let input;
     if (element === "description" || element === "notes") {
       input = document.createElement("textarea");
+    } else if (element === "priority") {
+      input = document.createElement("select");
+      const values = ["Trivial", "Low", "Medium", "High"];
+      values.forEach((value) => {
+        const option = document.createElement("option");
+        option.textContent = value;
+        option.setAttribute("value", values.indexOf(value));
+        input.appendChild(option);
+      });
+      // input.append
     } else {
       input = document.createElement("input");
     }
     input.setAttribute("type", inputType);
-    input.setAttribute("placeholder", `New ${  type  } ${  element}`);
+    input.setAttribute("placeholder", `New ${type} ${element}`);
     input.setAttribute("name", element);
     if (inputType === "number") {
       input.setAttribute("min", 0);
@@ -88,5 +98,16 @@ export default function formCreator() {
     return container;
   }
 
-  return { projectForm, todoForm, checklistItemForm };
+  function editTodoItem(paren, type, element) {
+    const parent = paren;
+    const container  = document.createElement("form");
+    container.classList.add(`${type}-container`, "form");
+    container.setAttribute("action", "#");
+    
+    addFormElement(type, element, container); 
+
+    parent.appendChild(container);
+  }
+
+  return { projectForm, todoForm, checklistItemForm, editTodoItem };
 }
